@@ -1,0 +1,339 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "富海石化商城"
+			}
+		},
+		{
+			"path": "pages/person/center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/person/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/person/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/person/enterpriseRegister",
+			"style": {
+				"navigationBarTitleText": "企业注册"
+			}
+		},
+		{
+			"path": "pages/person/agreement",
+			"style": {
+				"navigationBarTitleText": "用户注册协议"
+			}
+		},
+		{
+			"path": "pages_business/person/resetPassword",
+			"style": {
+				"navigationBarTitleText": "重置密码"
+			}
+		},
+		{
+			"path": "pages_business/order/list",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			}
+		},
+		{
+			"path": "pages_business/order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages_business/protocol/list",
+			"style": {
+				"navigationBarTitleText": "我的协议"
+			}
+		},
+		{
+			"path": "pages_business/protocol/detail",
+			"style": {
+				"navigationBarTitleText": "协议详情"
+			}
+		},
+		{
+			"path": "pages_business/order/create",
+			"style": {
+				"navigationBarTitleText": "生成订单"
+			}
+		},
+		{
+			"path": "pages_business/order/pay",
+			"style": {
+				"navigationBarTitleText": "订单支付"
+			}
+		},
+		{
+			"path": "pages_business/car/list",
+			"style": {
+				"navigationBarTitleText": "我的车辆"
+			}
+		},
+		{
+			"path": "pages_business/car/detail",
+			"style": {
+				"navigationBarTitleText": "车辆详情"
+			}
+		},
+		{
+			"path": "pages_business/other/account",
+			"style": {
+				"navigationBarTitleText": "我的账号"
+			}
+		},
+		{
+			"path": "pages_business/other/fundOccupation",
+			"style": {
+				"navigationBarTitleText": "资金占款详情"
+			}
+		},
+		{
+			"path": "pages_business/other/customerService",
+			"style": {
+				"navigationBarTitleText": "客服中心"
+			}
+		},
+		{
+			"path": "pages_business/web/webView",
+			"style": {
+				"navigationBarTitleText": "网页跳转"
+			}
+		},
+		{
+			"path": "pages/home/lmscHome",
+			"style": {
+				"navigationBarTitleText": "佳油MARKET"
+			}
+		},
+		{
+			"path": "pages_business/product/list",
+			"style": {
+				"navigationBarTitleText": "产品列表"
+			}
+		},
+		{
+			"path": "pages_business/product/detail",
+			"style": {
+				"navigationBarTitleText": "产品详情"
+			}
+		},
+		{
+			"path": "pages_business/product/recommonds",
+			"style": {
+				"navigationBarTitleText": "推荐产品"
+			}
+		},
+		{
+			"path": "pages_business/shoppingCart/list",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+			"path": "pages_business/protocol/products",
+			"style": {
+				"navigationBarTitleText": "协议产品"
+			}
+		},
+		{
+			"path": "pages_business/activity/list",
+			"style": {
+				"navigationBarTitleText": "活动列表"
+			}
+		},
+		{
+			"path": "pages_business/activity/products",
+			"style": {
+				"navigationBarTitleText": "竞价竟量"
+			}
+		},
+		{
+			"path": "pages_business/activity/activityDetail",
+			"style": {
+				"navigationBarTitleText": "活动详情"
+			}
+		},
+		{
+			"path": "pages_business/activity/executionDetail",
+			"style": {
+				"navigationBarTitleText": "竞价详情"
+			}
+		},
+		{
+			"path": "pages_business/activity/orders",
+			"style": {
+				"navigationBarTitleText": "活动订单"
+			}
+		},
+		{
+			"path": "pages_business/system/setting",
+			"style": {
+				"navigationBarTitleText": "系统设置"
+			}
+		},
+		{
+			"path": "pages_business/person/baseInfo",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages_business/person/companyInfo",
+			"style": {
+				"navigationBarTitleText": "企业信息"
+			}
+		},
+		{
+			"path": "pages_business/person/modifyPhone",
+			"style": {
+				"navigationBarTitleText": "手机号码修改"
+			}
+		},
+		{
+			"path": "pages_business/feedback/list",
+			"style": {
+				"navigationBarTitleText": "客户反馈",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages_business/feedback/detail",
+			"style": {
+				"navigationBarTitleText": "反馈信息"
+			}
+		},
+		{
+			"path": "pages_business/other/invitationRecord",
+			"style": {
+				"navigationBarTitleText": "邀请记录"
+			}
+		},
+		{
+			"path": "pages_business/info/list",
+			"style": {
+				"navigationBarTitleText": "资讯中心"
+			}
+		},
+		{
+			"path": "pages_business/info/detail",
+			"style": {
+				"navigationBarTitleText": "资讯详情"
+			}
+		},
+		{
+			"path": "pages_business/other/orderInTransit",
+			"style": {
+				"navigationBarTitleText": "在途下单"
+			}
+		},
+		{
+			"path": "pages_business/ticket/applyTicket",
+			"style": {
+				"navigationBarTitleText": "预约开票"
+			}
+		},
+		{
+			"path": "pages_business/ticket/applyTicketDetail",
+			"style": {
+				"navigationBarTitleText": "预约开票详情"
+			}
+		},
+		{
+			"path": "pages_business/ticket/applyTicketQuery",
+			"style": {
+				"navigationBarTitleText": "开票申请"
+			}
+		},
+		{
+			"path": "pages_business/ticket/applyTicketQueryDetail",
+			"style": {
+				"navigationBarTitleText": "开票申请详情"
+			}
+		},
+		{
+			"path": "pages_business/lottery/protocol",
+			"style": {
+				"navigationBarTitleText": "转盘抽奖管理规范"
+			}
+		},
+		{
+			"path": "pages_business/lottery/lottery",
+			"style": {
+				"navigationBarTitleText": "转盘抽奖"
+			}
+		},
+		{
+			"path": "pages_business/lottery/logisticsInfo",
+			"style": {
+				"navigationBarTitleText": "物流信息"
+			}
+		},
+		{
+			"path": "pages_business/lottery/record",
+			"style": {
+				"navigationBarTitleText": "抽奖记录"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "富海石化商城",
+		"navigationBarBackgroundColor": "#CC3D3E",
+		"backgroundColor": "#ffffff"
+	},
+	"tabBar": {
+		"borderStyle": "white",
+		"position": "bottom",
+		"backgroundColor": "#ffffff",
+		"color": "#999",
+		"selectedColor": "#CC3D3E",
+		"list": [{
+				"text": "首页",
+				"pagePath": "pages/home/home",
+				"iconPath": "static/home.png",
+				"selectedIconPath": "static/home-select.png"
+			},
+			{
+				"text": "佳油MARKET",
+				"pagePath": "pages/home/lmscHome",
+				"iconPath": "static/shop.png",
+				"selectedIconPath": "static/shop-select.png"
+			},
+			{
+				"text": "购物车",
+				"pagePath": "pages_business/shoppingCart/list",
+				"iconPath": "static/shoppingCart.png",
+				"selectedIconPath": "static/shoppingCart-select.png"
+			},
+			{
+				"text": "活动列表",
+				"pagePath": "pages_business/activity/list",
+				"iconPath": "static/activity.png",
+				"selectedIconPath": "static/activity-select.png"
+			},
+			{
+				"text": "个人中心",
+				"pagePath": "pages/person/center",
+				"iconPath": "static/person.png",
+				"selectedIconPath": "static/person-select.png"
+			}
+
+		]
+	}
+}
