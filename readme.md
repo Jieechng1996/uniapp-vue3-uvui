@@ -1,9 +1,12 @@
 <!--
  * @Date: 2024-07-04 09:48:35
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-08 10:52:20
+ * @LastEditTime: 2024-08-15 15:31:22
  * @LastEditors: guojiecheng
 -->
+
+# speak something
+
 # Vue 3 + Vite
 
 This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
@@ -29,4 +32,12 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 # 运行
 - npm run demo:h5 运行h5端，数据都是DEMO数据
+
+# 使用手法
+- 下载整个仓库
+- git clone --branch master https://github.com/username/repository.git
+- 更新 components
+- npm run update-components
+- 更新 uni_modules
+- npm run update-uni-modules
 

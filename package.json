@@ -24,7 +24,9 @@
     "build-pro:h5": "uni build --mode pro",
     "build-demo:h5": "uni build --mode demo",
     "build-demo:app-android": "uni build -p app-android --mode demo",
-    "build-demo:app-ios": "uni build -p app-ios --mode demo"
+    "build-demo:app-ios": "uni build -p app-ios --mode demo",
+    "update-components": "node script/sync-repo-files.js src/components src/components",
+    "update-uni-modules": "node script/sync-repo-files.js src/uni_modules src/uni_modules"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4020420240722002",
@@ -66,5 +68,8 @@
     "sass-loader": "^14.2.1",
     "tailwindcss": "^3.4.4",
     "vite": "5.2.8"
+  },
+  "bin": {
+    "copy-structure": "./script/copy-structure.js"
   }
 }
