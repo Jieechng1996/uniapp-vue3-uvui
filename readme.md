@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-04 09:48:35
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-15 16:45:53
+ * @LastEditTime: 2024-08-15 17:57:14
  * @LastEditors: guojiecheng
 -->
 
@@ -36,6 +36,8 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 # 使用手法
 - 下载整个仓库
 - git clone --branch master git@github.com:Jieechng1996/uniapp-vue3-uvui.git
+- 尽量使用yarn安装
+- yarn install
 - 更新 components
 - npm run update-components
 - 更新 uni_modules
