@@ -211,14 +211,16 @@ export default defineComponent({
                             <base-dialog search-key={item.searchKey} ref={dialog}
                                 api={item.api} keys={item.keys}
                                 onConfirm={(value) => {
-                                    formData[item.key + 'Text'] = ''
+                                    formData[item.key + 'Text'] = [item.keys?.value]
                                     formData[item.key] = value[item.keys?.key]
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
+                                    typeof item.callBackFunc == 'function' && item.callBackFunc(value)
                                 }}
                                 onClear={() => {
                                     formData[item.key + 'Text'] = ''
-                                    formData[item.key] = value[item.keys?.key]
-                                    typeof item.clearFunc == 'function' && item.clearFunc(value)
+                                    formData[item.key] = ''
+                                    typeof item.clearFunc == 'function' && item.clearFunc({})
+                                    typeof item.callBackFunc == 'function' && item.callBackFunc({})
                                 }} {...item.dialogProps}></base-dialog>
                         </view>
                     )
