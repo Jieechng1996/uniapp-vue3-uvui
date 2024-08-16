@@ -211,7 +211,7 @@ export default defineComponent({
                             <base-dialog search-key={item.searchKey} ref={dialog}
                                 api={item.api} keys={item.keys}
                                 onConfirm={(value) => {
-                                    formData[item.key + 'Text'] = [item.keys?.value]
+                                    formData[item.key + 'Text'] = value[item.keys?.value]
                                     formData[item.key] = value[item.keys?.key]
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
                                     typeof item.callBackFunc == 'function' && item.callBackFunc(value)
