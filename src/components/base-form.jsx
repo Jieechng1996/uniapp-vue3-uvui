@@ -136,7 +136,7 @@ export default defineComponent({
                                     formData[item.key] = ''
                                 }}
                                 {...item.timeProps} ></uv-datetime-picker>
-                            <uv-input className="w100p" v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-right" onClick={() => datetimePicker.value.open()}{...item.props} ></uv-input>
+                            <uv-input className="w100p" v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-right"  disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && datetimePicker.value.open()}{...item.props} ></uv-input>
                         </view>
                     )
                     break
