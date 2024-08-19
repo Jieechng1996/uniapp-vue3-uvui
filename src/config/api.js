@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-07-04 14:45:58
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-12 16:35:01
+ * @LastEditTime: 2024-08-19 17:57:18
  * @LastEditors: guojiecheng
  */
 import { host } from "./platform";
@@ -13,6 +13,8 @@ const fileServer = `${host}/fileServer`
 const ecExServer = `${host}/ecExServer`
 
 const ecInServer = `${host}/ecExServer`
+
+const bpmServer = `${host}/bpmServer`
 
 export const mockApi = {
     ecpExAdPictures_findPagination: `${ecInServer}/ecpExAdPictures/findPagination`,
@@ -118,6 +120,10 @@ export const mockApi = {
     fillShippingInfo: ecExServer + '/fillShippingInfo',
     
     getMyPrizeDetail: ecExServer + '/getMyPrizeDetail',
+
+    getBpmListByParam: `${bpmServer}/bpmListService/getBpmListByParam`,
+
+    findTasksByProcInstId: `${bpmServer}/bpmTaskService/findTasksByProcInstId`,
 }
 
 
