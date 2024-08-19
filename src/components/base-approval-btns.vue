@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-08-02 09:52:55
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-19 18:07:33
+ * @LastEditTime: 2024-08-19 18:15:46
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -39,9 +39,9 @@ import { baseForm } from '@/components'
 
 import fetch from '@/config/fetch'
 import { computed, onMounted, ref } from 'vue'
-import { toast , alert } from '../common/message'
-import { error } from '../config/message'
-import store from '../store'
+import { toast , alert } from '@/common/message'
+import { error } from '@/config/message'
+import store from '@/store'
 
 const props = defineProps({
     procDefKey: {
