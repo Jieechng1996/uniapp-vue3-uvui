@@ -119,6 +119,7 @@ export default defineComponent({
 
         const generate = (legend) => legend.map(item => {
             let element
+            item.disabled = item.disabled || (item.disabledFunc && item.disabledFunc()) || props.disabled 
             switch (item.type) {
                 case 'date':
                     const datetimePicker = ref()
@@ -136,7 +137,7 @@ export default defineComponent({
                                     formData[item.key] = ''
                                 }}
                                 {...item.timeProps} ></uv-datetime-picker>
-                            <uv-input className="w100p" v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-right"  disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && datetimePicker.value.open()}{...item.props} ></uv-input>
+                            <uv-input className="w100p" v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-right" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && datetimePicker.value.open()}{...item.props} ></uv-input>
                         </view>
                     )
                     break
@@ -155,7 +156,7 @@ export default defineComponent({
                     //     </view>
                     // }
                     element = <view className="w100p">
-                        <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && range.value.open()} {...item.props} ></uv-input>
+                        <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && range.value.open()} {...item.props} ></uv-input>
                         <uv-calendars ref={range} mode="range" onConfirm={({ range }) => {
                             formData[item.key] = range.before + ' ~ ' + range.after
                             formData[item.startDateKey] = range.before
@@ -169,7 +170,7 @@ export default defineComponent({
                     let regions = ref()
                     element = (
                         <view className="w100p">
-                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && regions.value.showModal()} {...item.props} ></uv-input>
+                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && regions.value.showModal()} {...item.props} ></uv-input>
                             <base-regions ref={regions}
                                 onConfirm={(value) => {
                                     formData[item.key] = value.map(item => item.code).join('/')
@@ -190,7 +191,7 @@ export default defineComponent({
                     let lookup = ref()
                     element = (
                         <view className="w100p">
-                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && lookup.value.showModal()} {...item.props} ></uv-input>
+                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && lookup.value.showModal()} {...item.props} ></uv-input>
                             <base-lookup-code ref={lookup} lookupType={item.lookupType} systemCode={item.systemCode}
                                 onCallback={(value) => {
                                     formData[item.key] = value.lookupCode
@@ -207,7 +208,7 @@ export default defineComponent({
                     let dialog = ref()
                     element = (
                         <view className="w100p">
-                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && dialog.value.showModal()} {...item.props} ></uv-input>
+                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && dialog.value.showModal()} {...item.props} ></uv-input>
                             <base-dialog search-key={item.searchKey} ref={dialog}
                                 api={item.api} keys={item.keys}
                                 onConfirm={(value) => {
@@ -232,7 +233,7 @@ export default defineComponent({
                 case 'select':
                     let picker = ref()
                     element = <view className="w100p">
-                        <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && picker.value.open()} {...item.props} ></uv-input>
+                        <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && picker.value.open()} {...item.props} ></uv-input>
                         <uv-picker ref={picker} columns={[item.options]} keyName="label" cancelText="清除选择" onConfirm={
                             ({ value }) => {
                                 formData[item.key] = value[0].key
@@ -253,7 +254,7 @@ export default defineComponent({
                 case 'romoteSelect':
                     let romoteSelect = ref()
                     element = <view className="w100p">
-                        <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled || props.disabled} onClick={() => !(item.disabled || props.disabled) && romoteSelect.value.showModal()} {...item.props} ></uv-input>
+                        <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && romoteSelect.value.showModal()} {...item.props} ></uv-input>
                         <base-remote-select ref={romoteSelect}
                             keys={item.keys}
                             api={item.api}
@@ -268,26 +269,26 @@ export default defineComponent({
                     </view>
                     break;
                 case 'switch':
-                    element = <uv-switch v-model={formData[item.key + 'Flag']} size="28" disabled={item.disabled || props.disabled} onChange={(event) => {
+                    element = <uv-switch v-model={formData[item.key + 'Flag']} size="28" disabled={item.disabled} onChange={(event) => {
                         formData[item.key] = event ? (item.trueValue || 'Y') : (item.falseValue || 'N')
                     }} {...item.props}></uv-switch>
                     break;
                 case 'radio':
-                    element = <uv-radio-group v-model={formData[item.key]} {...item.props} {...item.radioGroupProps} disabled={item.disabled || props.disabled}>
+                    element = <uv-radio-group v-model={formData[item.key]} {...item.props} {...item.radioGroupProps} disabled={item.disabled}>
                         {item?.options.map((line, index) => {
                             return <uv-radio customStyle={{ marginRight: '16px' }} shape="square" label={line.value} name={line.key} {...item.radioProps}>{line.value}</uv-radio>
                         })}
                     </uv-radio-group>
                     break;
                 case 'textarea':
-                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled || props.disabled} border="surround" {...item.props} />
+                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} />
                     break
                 case 'phone':
                 case 'phoneNumber':
                 case 'input':
                 case 'email':
                 default:
-                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled || (item.disabledFunc && item.disabledFunc()) || props.disabled} border="surround" {...item.props} />
+                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} />
                     break;
             }
 
@@ -297,7 +298,7 @@ export default defineComponent({
                 </uv-form-item> : <uv-form-item label={item.label} name={item.key} prop={item.key} borderBottom={true} required={item.required} {...props.formItemProps} {...item.formItemProps} >
                     {element}
                 </uv-form-item>
-                
+
             )
 
         })
