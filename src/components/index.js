@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-07-09 11:00:18
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-08 15:14:07
+ * @LastEditTime: 2024-08-19 18:08:59
  * @LastEditors: guojiecheng
  */
 // #ifdef MP-WEIXIN
@@ -18,6 +18,8 @@ import baseList from "./base-list"
 import baseDialog from "./base-dialog"
 import baseLookupCode from "./base-lookupCode.vue"
 import baseRegions from "./base-regions.vue"
+import baseApprovalBtns from "./base-approval-btns.vue"
+import baseFlowRecord from "./base-flow-record.vue"
 
 export {
     baseForm,
@@ -25,5 +27,7 @@ export {
     baseList,
     baseDialog,
     baseLookupCode,
-    baseRegions
+    baseRegions,
+    baseApprovalBtns,
+    baseFlowRecord
 }

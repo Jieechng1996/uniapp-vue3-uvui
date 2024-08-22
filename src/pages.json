@@ -4,9 +4,170 @@
 		{
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "标题"
+				"navigationBarTitleText": "办公应用"
 			}
 		},
+		{
+			"path": "pages/home/fieldAssistant",
+			"style": {
+				"navigationBarTitleText": "外勤助手",
+			}
+		},
+		{
+			"path": "pages/person/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/person/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages_business/person/info",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages_business/person/modifyPhone",
+			"style": {
+				"navigationBarTitleText": "更换手机"
+			}
+		},
+		{
+			"path": "pages_business/person/resetPassword",
+			"style": {
+				"navigationBarTitleText": "设置密码"
+			}
+		},
+		{
+			"path": "pages_business/attendance/list",
+			"style": {
+				"navigationBarTitleText": "打卡记录"
+			}
+		},
+		{
+			"path": "pages_business/attendance/detail",
+			"style": {
+				"navigationBarTitleText": "打卡详情"
+			}
+		},
+		{
+			"path": "pages_business/order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages_business/contract/list",
+			"style": {
+				"navigationBarTitleText": "协议汇总",
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+			}
+		},
+		{
+			"path": "pages_business/contract/detail",
+			"style": {
+				"navigationBarTitleText": "协议详情"
+			}
+		},
+		{
+			"path": "pages_business/order/list",
+			"style": {
+				"navigationBarTitleText": "订单查询"
+			}
+		},
+		{
+			"path": "pages_business/contract/approvalList",
+			"style": {
+				"navigationBarTitleText": "协议审批"
+			}
+		},
+		{
+			"path": "pages_business/price/priceApproval",
+			"style": {
+				"navigationBarTitleText": "价格审批"
+			}
+		},
+		{
+			"path": "pages_business/price/regionQuotationList",
+			"style": {
+				"navigationBarTitleText": "区域报价",
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+			}
+		},
+		{
+			"path": "pages_business/price/regionQuotationDetail",
+			"style": {
+				"navigationBarTitleText": "区域报价详情",
+			}
+		},
+		{
+			"path": "pages_business/car/carClaimList",
+			"style": {
+				"navigationBarTitleText": "车辆认领",
+			}
+		},
+		{
+			"path": "pages_business/car/carClaimDetail",
+			"style": {
+				"navigationBarTitleText": "车辆认领详情",
+			}
+		},
+		{
+			"path": "pages_business/customer/balanceQuery",
+			"style": {
+				"navigationBarTitleText": "客户余额",
+			}
+		},
+		{
+			"path": "pages_business/customer/memberQuery",
+			"style": {
+				"navigationBarTitleText": "客户查询",
+			}
+		},
+		{
+			"path": "pages_business/report/deliveryDetailsQuery",
+			"style": {
+				"navigationBarTitleText": "发货明细查询",
+			}
+		},
+		{
+			"path": "pages_business/report/limitedQuery",
+			"style": {
+				"navigationBarTitleText": "限量查询",
+			}
+		},
+		{
+			"path": "pages_business/report/contractQuery",
+			"style": {
+				"navigationBarTitleText": "协议查询",
+			}
+		},
+		{
+			"path": "pages_business/report/invoiceQuery",
+			"style": {
+				"navigationBarTitleText": "开票查询",
+			}
+		},
+		{
+			"path": "pages_business/individualVolumeIncrease/list",
+			"style": {
+				"navigationBarTitleText": "单独放量",
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+			}
+		},
+		{
+			"path": "pages_business/individualVolumeIncrease/detail",
+			"style": {
+				"navigationBarTitleText": "单独放量详情",
+			}
+		},
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
@@ -21,10 +182,20 @@
 		"color": "#999",
 		"selectedColor": "#CC3D3E",
 		"list": [{
-				"text": "首页",
+				"text": "工作",
 				"pagePath": "pages/home/home",
-				"iconPath": "static/home.png",
-				"selectedIconPath": "static/home-select.png"
+				"iconPath": "static/work.png",
+				"selectedIconPath": "static/work-select.png"
+			},{
+				"text": "外勤助手",
+				"pagePath": "pages/home/fieldAssistant",
+				"iconPath": "static/foot.png",
+				"selectedIconPath": "static/foot-select.png"
+			},{
+				"text": "我的",
+				"pagePath": "pages/person/my",
+				"iconPath": "static/person.png",
+				"selectedIconPath": "static/person-select.png"
 			},
 
 		]

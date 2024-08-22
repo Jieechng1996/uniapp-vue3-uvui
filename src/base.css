@@ -1,1 +1,37 @@
+@import "@/fuhai-material/css/iconfont.css";
+@import "@/fuhai-material/css/ionic.min.css";
+.t-approved {
+	color: #d55757;
+}
 
+.t-cancelled {
+	color: #ff0012;
+}
+
+.t-colosed {
+	color: #242424;
+}
+
+.t-colsing {
+	color: #a23eff;
+}
+
+.t-effect {
+	color: #5bc706;
+}
+
+.t-making {
+	color: #06c;
+}
+
+.t-deleted {
+	color: #fc3;
+}
+
+.t-reject {
+	color: #ff4d00;
+}
+
+.t-submit {
+	color: #5bc706;
+}

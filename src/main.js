@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-15 16:36:09
+ * @LastEditTime: 2024-08-16 10:32:05
  * @LastEditors: guojiecheng
  */
 import {
@@ -20,7 +20,10 @@ store.dispatch('INIT_BASE_INFO')
 export function createApp() {
 	const app = createSSRApp(App);
 	app.provide("skin", {
-		primaryColor: "red",
+		primaryColor: '#CC3D3E',
+		primaryColorText: {
+			color: '#CC3D3E',
+		}
 	});
 	app.provide("base", {});
 	return {

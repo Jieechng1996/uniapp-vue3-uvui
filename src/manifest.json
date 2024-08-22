@@ -131,10 +131,13 @@
         "title" : "富海DEMO",
         "sdkConfigs" : {
             "maps" : {
-                "amap" : {
-                    "key" : "7a300e155268a12204c50825cd5fbbd1",
-                    "securityJsCode" : "d65ee5370777920d06cf08c4a414c0d7",
-                    "serviceHost" : ""
+                // "amap" : {
+                //     "key" : "7a300e155268a12204c50825cd5fbbd1",
+                //     "securityJsCode" : "d65ee5370777920d06cf08c4a414c0d7",
+                //     "serviceHost" : ""
+                // },
+                "bmap": {
+                    "key": "0TFXRs5xKYmhbuoMuE3etxvBFKpu4RHH"
                 }
             }
         }

@@ -39,6 +39,9 @@
 .gold {
   color: #bf8500
 }
+.w50p {
+  width: 50%;
+}
 
 @tailwind base;
 @tailwind components;

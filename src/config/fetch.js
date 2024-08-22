@@ -1,13 +1,14 @@
 /*
  * @Date: 2024-07-04 14:46:12
  * @Author: guojiecheng
- * @LastEditTime: 2024-07-26 10:29:49
+ * @LastEditTime: 2024-08-16 14:35:41
  * @LastEditors: guojiecheng
  */
 import { baseRequest, bufferRequest } from '@/common/httpServer'
 import api, { mockApi } from "./api"
 
 import result from "../mock/result";
+import { uploadData } from '../common/httpServer';
 
 let fetch = {}
 
@@ -18,6 +19,8 @@ for(let i in api){
 fetch.ecDriverWorkFlowController_transOrderDownloadPDF = (params) => bufferRequest({params, url :api.ecDriverWorkFlowController_transOrderDownloadPDF})
 
 fetch.ecexOrderLineController_doExport = (params) =>  bufferRequest({params, url : api.ecexOrderLineController_doExport})
+
+fetch.fileUploadService_pictureUpload = (filePath) => uploadData(api.fileUploadService_pictureUpload, filePath)
 
 if (import.meta.env.MODE === 'demo') {
 

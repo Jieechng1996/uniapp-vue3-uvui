@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-07 14:38:23
+ * @LastEditTime: 2024-08-16 17:07:04
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -106,16 +106,18 @@ const click = (index) => {
     currentList.value[index].checked = true
 }
 
-const emit = defineEmits(['confirm', 'clear'])
+const emit = defineEmits(['confirm', 'clear', 'callback'])
 
 const confirm = () => {
     let item = currentList.value.find(item => item.checked) || {}
     emit('confirm', item)
+    emit('callback', item)
     hideModal()
 }
 
 const clear = () => {
     emit('clear', {})
+    emit('callback', {})
     hideModal()
 }
 
