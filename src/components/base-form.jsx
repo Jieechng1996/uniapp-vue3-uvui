@@ -198,7 +198,7 @@ export default defineComponent({
                                     formData[item.key + 'Text'] = value.meaning
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }} onOnLoad={(list) => {
-                                    formData[item.key + 'Text'] = formData[item.key + 'Text'] || list.find(item => item.lookupCode === formData[item.key])?.meaning
+                                    formData[item.key + 'Text'] = formData[item.key + 'Text'] || list.find(line => line.lookupCode === formData[item.key])?.meaning
                                 }}></base-lookup-code>
                         </view>
                     )
