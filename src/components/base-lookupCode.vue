@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-07 14:50:58
+ * @LastEditTime: 2024-08-26 14:57:37
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -13,7 +13,7 @@
         <view class="popup-content">
             <picker-view class="picker-view" @change="change">
                 <picker-view-column>
-                    <view class="item" v-for="(item, index) in actions" :key="index">{{ item.meaning }}</view>
+                    <view class="line" v-for="(item, index) in actions" :key="index">{{ item.meaning }}</view>
                 </picker-view-column>
             </picker-view>
         </view>
@@ -148,8 +148,8 @@ defineExpose({
     height: 100%;
 }
 
-.item {
-    line-height: 100rpx;
+.line {
+    line-height: 34px;
     text-align: center;
 }
 
