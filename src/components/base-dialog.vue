@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-16 17:07:04
+ * @LastEditTime: 2024-08-26 15:29:08
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -21,7 +21,7 @@
                         </uv-search>
                     </view>
                     <view style="height: calc( 100% - 103px );">
-                        <base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList">
+                        <base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
                             <template #default>
                                 <uv-list>
                                     <uv-list-item v-for="(item, index ) in currentList" :key="index" :show-arrow="false"
@@ -124,6 +124,7 @@ const clear = () => {
 const search = () => list.value.refresh()
 
 const showModal = () => {
+    list.value.claerList()
     popup.value.open()
     params.value = {}
     for (let i in props.params) {

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-09 16:30:01
+ * @LastEditTime: 2024-08-26 15:28:43
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -55,17 +55,15 @@ import httpServer from "../common/httpServer";
 
 const refreshType = ref(false)
 
-const refreshList = async () => {
-    refreshType.value = true
+const refreshList = async (refresh) => {
+    refresh && (refreshType.value = true)
     let { data, page } = await httpServer.postV1(props.url, {
         pageIndex: 1,
         pageRows: props.pageSize,
         ...props.params
     }).catch(err => {
         list.value = []
-        setTimeout(() => {
-            refreshType.value = false
-        }, 1000);
+        refresh && setTimeout(() => { refreshType.value = false }, 1000);
         return Promise.reject(err)
     })
     console.log(data)
@@ -119,7 +117,8 @@ watch(() => list.value, (value) => {
 
 
 defineExpose({
-    refreshList
+    refreshList,
+    claerList: () => list.value = []
 })
 
 onMounted(() => {
