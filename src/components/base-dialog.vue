@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 15:30:41
+ * @LastEditTime: 2024-08-26 15:35:15
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -116,13 +116,13 @@ const clear = () => {
 const search = () => list.value.refresh();
 
 const showModal = () => {
-	list.value.claerList();
 	popup.value.open();
 	params.value = {};
 	for (let i in props.params) {
 		params.value[i] = props.params[i];
 	}
 	setTimeout(() => {
+        list.value.claerList();
 		list.value.refreshList();
 	}, 200);
 };
