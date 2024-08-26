@@ -195,7 +195,7 @@ export default defineComponent({
                             <base-lookup-code ref={lookup} lookupType={item.lookupType} systemCode={item.systemCode}
                                 onCallback={(value) => {
                                     formData[item.key] = value.lookupCode
-                                    formData[item.key + 'Text'] = value.lookupCode
+                                    formData[item.key + 'Text'] = value.meaning
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}></base-lookup-code>
                         </view>
