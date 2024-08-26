@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 15:35:15
+ * @LastEditTime: 2024-08-26 16:10:53
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -71,7 +71,7 @@ const props = defineProps({
 	},
 	params: {
 		type: String,
-		default: "",
+		default: () => {},
 	},
 	useContent: {
 		type: Boolean,
