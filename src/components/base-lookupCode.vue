@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 14:57:37
+ * @LastEditTime: 2024-08-26 16:05:47
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -52,7 +52,7 @@ const lookupCode = ref('')
 //     }
 // })
 
-const emit = defineEmits(['callback', 'update:modelValue', 'confirm', 'cancel'])
+const emit = defineEmits(['callback', 'update:modelValue', 'confirm', 'cancel', 'onLoad'])
 
 const change = (event) => {
     let index = event.detail.value[0]
@@ -82,6 +82,7 @@ const getLookupCode = async () => {
     })
     actions.value = lookupCodeList
     lookupCode.value = lookupCodeList[0].lookupCode
+    emit('onLoad', lookupCodeList)
 
 }
 const confirm = (e) => {

@@ -119,7 +119,7 @@ export default defineComponent({
 
         const generate = (legend) => legend.map(item => {
             let element
-            item.disabled = item.disabled || (item.disabledFunc && item.disabledFunc()) || props.disabled 
+            item.disabled = item.disabled || (item.disabledFunc && item.disabledFunc()) || props.disabled
             switch (item.type) {
                 case 'date':
                     const datetimePicker = ref()
@@ -197,6 +197,8 @@ export default defineComponent({
                                     formData[item.key] = value.lookupCode
                                     formData[item.key + 'Text'] = value.meaning
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
+                                }} onOnLoad={(list) => {
+                                    formData[item.key + 'Text'] = formData[item.key + 'Text'] || list.find(item => item.lookupCode === formData[item.key])?.meaning
                                 }}></base-lookup-code>
                         </view>
                     )
