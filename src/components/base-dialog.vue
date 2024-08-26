@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 16:10:53
+ * @LastEditTime: 2024-08-26 16:12:17
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -70,7 +70,7 @@ const props = defineProps({
 		default: "",
 	},
 	params: {
-		type: String,
+		type: Object,
 		default: () => {},
 	},
 	useContent: {
