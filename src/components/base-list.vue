@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 15:28:43
+ * @LastEditTime: 2024-08-27 16:38:18
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -118,6 +118,7 @@ watch(() => list.value, (value) => {
 
 defineExpose({
     refreshList,
+    getNextList,
     claerList: () => list.value = []
 })
 
