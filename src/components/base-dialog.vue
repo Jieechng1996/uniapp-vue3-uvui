@@ -1,12 +1,12 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 16:12:17
+ * @LastEditTime: 2024-09-04 17:20:27
  * @LastEditors: guojiecheng
 -->
 <template>
 	<div>
-		<uv-popup ref="popup" background-color="#fff" mode="right">
+		<uv-popup ref="popup" background-color="#fff" mode="right" v-bind="{ ...props.popupProps }">
 			<view class="popup-content">
 				<!-- <uni-search-bar @confirm="search" v-model="searchValue" @input="input"
                         :placeholder="props.searchKey.placeholder">
@@ -76,6 +76,10 @@ const props = defineProps({
 	useContent: {
 		type: Boolean,
 		default: false,
+	},
+	popupProps: {
+		type: Object,
+		default: () => ({}),
 	},
 });
 
