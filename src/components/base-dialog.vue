@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-04 17:20:27
+ * @LastEditTime: 2024-09-04 17:52:39
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -20,7 +20,7 @@
 				</view>
 				<view style="height: calc(100% - 103px)">
 					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
-						<template #default>
+						<template #default="{ list : dataList }">
 							<uv-list>
 								<uv-list-item v-for="(item, index) in currentList" :key="index" :show-arrow="false" clickable @click="() => click(index)">
 									<template v-slot:body>
