@@ -45,7 +45,7 @@ export const baseRequest = ({
             header: {
                 'content-type': contentType,
                 certificate: store.state?.userInfo?.certificate || 'nothing',
-                // pf
+                "pf": import.meta.env.VITE_PF
             },
             method: method,
             timeout: timeout,
