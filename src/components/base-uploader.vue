@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-12 17:24:05
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-05 15:42:21
+ * @LastEditTime: 2024-09-05 17:13:10
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -86,14 +86,14 @@ const choose = async (res) => {
     list.value.push(data)
     emit('update:modelValue', list.value)
     emit('success', data)
-    emit('callBack', data)
+    emit('callback', data)
 }
 
 const delFile = (event) => {
     list.value.splice(event, 1)
     emit('update:modelValue', list.value)
     emit('delete')
-    emit('callBack', {})
+    emit('callback', {})
 }
 
 onMounted(() =>{

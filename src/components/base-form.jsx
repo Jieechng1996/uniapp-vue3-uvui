@@ -75,7 +75,7 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'btnSearch', 'dataOnChange'],
     components: {
-        uvForm, uvFormItem, uvInput, uvDatetimePicker, uvPicker, baseDialog, baseLookupCode, baseRegions, uvTextarea, baseRemoteSelect, uvIcon, uvCalendars, uvSwitch, uvRadioGroup, uvRadio , baseUploader
+        uvForm, uvFormItem, uvInput, uvDatetimePicker, uvPicker, baseDialog, baseLookupCode, baseRegions, uvTextarea, baseRemoteSelect, uvIcon, uvCalendars, uvSwitch, uvRadioGroup, uvRadio, baseUploader
     },
     setup(props, { emit, slots, expose }) {
 
@@ -187,11 +187,13 @@ export default defineComponent({
                         </view>
                     )
                     break;
-                case 'uploader': 
-                    formData[item.key+ 's'] = formData[item.key] ? [{ filesPath: formData[item.key] }] : []
-                    element = <base-uploader v-model={formData[item.key+ 's']} limit="1" disabled={item.disabled} onCallback={(file) => {
-                        formData[item.key] = file.filesPath
-                    }}></base-uploader>
+                case 'uploader':
+                    formData[item.key + 's'] = formData[item.key] ? [{ filesPath: formData[item.key] }] : []
+                    element = <view>
+                        <base-uploader v-model={formData[item.key + 's']} limit={1} disabled={item.disabled} onCallback={(file) => {
+                            formData[item.key] = file.filesPath
+                        }}></base-uploader>
+                    </view>
                     break;
                 case 'lookup':
                 case 'lookupCode':
