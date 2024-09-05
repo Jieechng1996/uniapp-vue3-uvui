@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-12 17:24:05
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-05 17:13:10
+ * @LastEditTime: 2024-09-05 17:26:30
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -64,12 +64,10 @@ const emit = defineEmits(['update:modelValue', 'success', 'delete'])
 
 watch(() => props.modelValue, (value) => {
     if (value) {
-        console.log(toRaw(value))
         toRaw(value).forEach(item => {
             item.url = item.filesPath
         })
         list.value = value
-        console.log(list.value)
     }
 }, { deep: true , immediate: true })
 
