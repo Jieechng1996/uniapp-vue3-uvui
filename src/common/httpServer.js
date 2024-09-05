@@ -73,7 +73,7 @@ export const baseRequest = ({
                     //     log.warn(res.data.code, res.data.msg)
                     // }
                     // error(res.data.msg || codeMessage[res.statusCode] || '未知错误')
-                    if (res.data?.code?.startsWith('4')) {
+                    if (['4000','4001'].some( item => item ===  res.data?.code )) {
                         // app.globalData.userInfo = {}
                         uni.removeStorageSync('userInfo')
                         toast(res.data.msg)
