@@ -335,10 +335,13 @@ export default defineComponent({
             }
             if (item.required) {
                 rules[item.key] = [...rules[item.key], {
-                    required: true,
-                    message: item.label ? item.label + '为必填字段' : '请检查必填项',
-                    trigger: ['blur', 'change']
+                    validator: (rule, value, callback) => !value, message: item.label ? item.label + '为必填字段' : '请检查必填项', trigger: ['change']
                 }]
+                // rules[item.key] = [...rules[item.key], {
+                //     required: true,
+                //     message: item.label ? item.label + '为必填字段' : '请检查必填项',
+                //     trigger: ['blur', 'change']
+                // }]
             }
         })
 
