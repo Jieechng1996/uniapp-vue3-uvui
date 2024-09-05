@@ -6,6 +6,7 @@ import uvDatetimePicker from '@/uni_modules/uv-datetime-picker/components/uv-dat
 import uvPicker from '../uni_modules/uv-picker/components/uv-picker/uv-picker.vue'
 import uvTextarea from '../uni_modules/uv-textarea/components/uv-textarea/uv-textarea.vue'
 import baseDialog from './base-dialog.vue'
+import baseUploader from './base-uploader.vue'
 import baseLookupCode from "./base-lookupCode.vue"
 import baseRegions from "./base-regions.vue"
 import baseRemoteSelect from "./base-remote-select.vue"
@@ -74,7 +75,7 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'btnSearch', 'dataOnChange'],
     components: {
-        uvForm, uvFormItem, uvInput, uvDatetimePicker, uvPicker, baseDialog, baseLookupCode, baseRegions, uvTextarea, baseRemoteSelect, uvIcon, uvCalendars, uvSwitch, uvRadioGroup, uvRadio
+        uvForm, uvFormItem, uvInput, uvDatetimePicker, uvPicker, baseDialog, baseLookupCode, baseRegions, uvTextarea, baseRemoteSelect, uvIcon, uvCalendars, uvSwitch, uvRadioGroup, uvRadio , baseUploader
     },
     setup(props, { emit, slots, expose }) {
 
@@ -186,6 +187,12 @@ export default defineComponent({
                         </view>
                     )
                     break;
+                case 'uploader': 
+                    formData[item.key+ 's'] = formData[item.key+ 's'] || [{ filesPath: formData[item.key] || ''}] 
+                    element = <base-uploader v-model={formData[item.key+ 's']} limit="1" disabled={item.disabled} onCallback={(file) => {
+                        formData[item.key] = file.filesPath
+                    }}></base-uploader>
+                    break;
                 case 'lookup':
                 case 'lookupCode':
                     let lookup = ref()
@@ -231,7 +238,6 @@ export default defineComponent({
                 case 'text':
                     element = <view>{formData[item.key]}</view>
                     break
-
                 case 'select':
                     let picker = ref()
                     element = <view className="w100p">
