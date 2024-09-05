@@ -188,7 +188,7 @@ export default defineComponent({
                     )
                     break;
                 case 'uploader': 
-                    formData[item.key+ 's'] = formData[item.key+ 's'] || [{ filesPath: formData[item.key] || ''}] 
+                    formData[item.key+ 's'] = formData[item.key] ? [{ filesPath: formData[item.key] }] || []
                     element = <base-uploader v-model={formData[item.key+ 's']} limit="1" disabled={item.disabled} onCallback={(file) => {
                         formData[item.key] = file.filesPath
                     }}></base-uploader>
