@@ -310,7 +310,7 @@ export default defineComponent({
             </uv-form-item>
 
             return (
-                item.showFunc ? item.showFunc() && elementBox: ( item.show ? item.show && elementBox : elementBox  ) 
+                item.showFunc ? item.showFunc() && elementBox: elementBox
             )
 
         })
