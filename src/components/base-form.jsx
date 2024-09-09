@@ -305,13 +305,12 @@ export default defineComponent({
                     break;
             }
 
-            return (
-                item.showFunc ? item.showFunc() && <uv-form-item label={item.label} name={item.key} prop={item.key} borderBottom={true} required={item.required} {...props.formItemProps} {...item.formItemProps} >
-                    {element}
-                </uv-form-item> : <uv-form-item label={item.label} name={item.key} prop={item.key} borderBottom={true} required={item.required} {...props.formItemProps} {...item.formItemProps} >
-                    {element}
-                </uv-form-item>
+            let elementBox = <uv-form-item label={item.label} name={item.key} prop={item.key} borderBottom={true} required={item.required} {...props.formItemProps} {...item.formItemProps} >
+                {element}
+            </uv-form-item>
 
+            return (
+                item.showFunc ? item.showFunc() && elementBox: ( item.show ? elementBox : elementBox )
             )
 
         })
