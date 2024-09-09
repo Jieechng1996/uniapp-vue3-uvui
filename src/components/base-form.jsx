@@ -281,6 +281,7 @@ export default defineComponent({
                 case 'switch':
                     item.trueValue = item.trueValue || 'Y'
                     item.falseValue = item.falseValue || 'N'
+                    formData[item.key] = formData[item.key] || item.falseValue
                     formData[item.key + 'Flag'] = formData[item.key] == item.trueValue
                     element = <uv-switch v-model={formData[item.key + 'Flag']} size="28" disabled={item.disabled} onChange={(event) => {
                         formData[item.key] = event ? item.trueValue : item.falseValue
