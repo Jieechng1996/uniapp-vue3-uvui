@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-09 15:13:44
+ * @LastEditTime: 2024-09-09 15:51:55
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -14,7 +14,7 @@
 				<view v-if="props.searchKey.key" class="p-1">
 					<uv-search shape="square" :placeholder="props.searchKey.placeholder" @search="search" @input="input" :showAction="false">
 						<template #suffix>
-							<uv-button type="primary" size="small">搜索</uv-button>
+							<uv-button type="primary" size="small" @click="() => list.refreshList()">搜索</uv-button>
 						</template>
 					</uv-search>
 				</view>
