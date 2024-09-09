@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-04 17:52:39
+ * @LastEditTime: 2024-09-09 15:13:44
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -17,6 +17,9 @@
 							<uv-button type="primary" size="small">搜索</uv-button>
 						</template>
 					</uv-search>
+				</view>
+				<view v-else class="text-center text-base p-2 font-bold" >
+					请选择
 				</view>
 				<view style="height: calc(100% - 103px)">
 					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
