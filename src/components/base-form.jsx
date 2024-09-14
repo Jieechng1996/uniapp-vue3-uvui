@@ -243,7 +243,7 @@ export default defineComponent({
                 case 'select':
                     let picker = ref()
                     element = <view className="w100p">
-                        <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && picker.value.open()} {...item.props} ></uv-input>
+                        <uv-input v-model={formData[item.key + 'Text' ]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && picker.value.open()} {...item.props} ></uv-input>
                         <uv-picker ref={picker} columns={[item.options]} keyName="label" cancelText="清除选择" onConfirm={
                             ({ value }) => {
                                 formData[item.key] = value[0].key
