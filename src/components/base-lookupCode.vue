@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-26 16:05:47
+ * @LastEditTime: 2024-09-14 16:57:11
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -72,7 +72,7 @@ const getLookupCode = async () => {
         })
         lookupCodeList = data
         lookupCodes = [...lookupCodes, ...data]
-        store.commit('SET_LOOKUP_CODE_LIST', lookupCode)
+        store.commit('SET_LOOKUP_CODE_LIST', lookupCodes)
         // wx.setStorageSync('lookupCodeList', lookupCode)
     }
     lookupCodeList.map((item) => {
