@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-14 16:57:11
+ * @LastEditTime: 2024-09-14 17:02:48
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -100,13 +100,16 @@ const cancel = (e) => {
 }
 
 onMounted(() => {
-    getLookupCode()
+   // getLookupCode()
 })
 
 
 const popup = ref()
 
-const showModal = () => popup.value.open('bottom')
+const showModal = () => {
+    popup.value.open('bottom')
+    getLookupCode()
+}
 
 const hideModal = () => popup.value.close()
 
