@@ -9,7 +9,7 @@ import baseDialog from './base-dialog.vue'
 import baseUploader from './base-uploader.vue'
 import baseLookupCode from "./base-lookupCode.vue"
 import baseRegions from "./base-regions.vue"
-import baseRemoteSelect from "./base-remote-select.vue"
+import baseApiSelect from "./base-api-select.vue"
 import uvIcon from '../uni_modules/uv-icon/components/uv-icon/uv-icon.vue'
 import uvCalendars from '../uni_modules/uv-calendars/components/uv-calendars/uv-calendars.vue'
 import uvSwitch from '../uni_modules/uv-switch/components/uv-switch/uv-switch.vue'
@@ -75,7 +75,7 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'btnSearch', 'dataOnChange'],
     components: {
-        uvForm, uvFormItem, uvInput, uvDatetimePicker, uvPicker, baseDialog, baseLookupCode, baseRegions, uvTextarea, baseRemoteSelect, uvIcon, uvCalendars, uvSwitch, uvRadioGroup, uvRadio, baseUploader
+        uvForm, uvFormItem, uvInput, uvDatetimePicker, uvPicker, baseDialog, baseLookupCode, baseRegions, uvTextarea, baseApiSelect, uvIcon, uvCalendars, uvSwitch, uvRadioGroup, uvRadio, baseUploader
     },
     setup(props, { emit, slots, expose }) {
 
@@ -261,11 +261,11 @@ export default defineComponent({
                         }{...item.pickerProps}> </uv-picker>
                     </view>
                     break;
-                case 'romoteSelect':
+                case 'apiSelect':
                     let romoteSelect = ref()
                     element = <view className="w100p">
                         <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !(item.disabled || props.disabled) && romoteSelect.value.showModal()} {...item.props} ></uv-input>
-                        <base-remote-select ref={romoteSelect}
+                        <base-api-select ref={romoteSelect}
                             keys={item.keys}
                             api={item.api}
                             params={item.params}
