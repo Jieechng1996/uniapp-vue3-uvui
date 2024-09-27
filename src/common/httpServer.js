@@ -113,7 +113,7 @@ export const simpleRequest = ({
             url: url, //仅为示例，并非真实接口地址。
             data: params,
             header: {
-                'content-type': contentType,
+                'content-type': 'application/json',
                 certificate: store.state?.userInfo?.certificate || 'nothing',
                 "pf": import.meta.env.VITE_PF
             },
