@@ -227,12 +227,14 @@ export default defineComponent({
                                     formData[item.key] = value[item.keys?.key]
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
                                     typeof item.callBackFunc == 'function' && item.callBackFunc(value)
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}
                                 onClear={() => {
                                     formData[item.key + 'Text'] = ''
                                     formData[item.key] = ''
                                     typeof item.clearFunc == 'function' && item.clearFunc({})
                                     typeof item.callBackFunc == 'function' && item.callBackFunc({})
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc({})
                                 }} {...item.dialogProps}></base-dialog>
                         </view>
                     )
