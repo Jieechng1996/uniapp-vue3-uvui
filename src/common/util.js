@@ -78,7 +78,7 @@ export const simpleNavigateTo = (path, params) => {
   let requestParams = []
   let url = path
   for (let i in params) {
-    requestParams.push(i + '=' + params[i])
+    params[i] && requestParams.push(i + '=' + params[i])
   }
   if (requestParams.length !== 0) {
     url = path + '?' + requestParams.join('&')
