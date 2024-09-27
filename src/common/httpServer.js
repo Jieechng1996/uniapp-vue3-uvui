@@ -104,58 +104,36 @@ export const baseRequest = ({
 
 }
 
-// export const simpleRequest = ({
-//     params,
-//     url,
-// }) => {
-//     return new Promise((resolve, reject) => {
-//         uni.showLoading({
-//             title: '加载中',
-//             mask: true
-//         });
-//         uni.request({
-//             url: url, //仅为示例，并非真实接口地址。
-//             data: params,
-//             header: {
-//                 'content-type': 'application/json',
-//                 certificate: getApp().globalData.userInfo?.certificate || 'nothing',
-//                 pf
-//             },
-//             method: 'post',
-//             success: (res) => {
-//                 uni.hideLoading()
-//                 console.log({
-//                     timestamp: dayjs().format(),
-//                     url,
-//                     params,
-//                 })
-//                 if (res.statusCode === 200) {
-//                     resolve(res.data);
-//                 } else {
-//                     if (env === 'pro') {
-//                         log.warn(url)
-//                         log.warn(params)
-//                         log.warn(res.data.code, res.data.msg)
-//                     }
-//                     reject(res.data)
-//                 }
-//             },
-//             fail: (res) => {
-//                 uni.hideLoading()
-//                 reject(res)
-//                 error(res.errMsg || '未知错误')
-//                 if (env === 'pro') {
-//                     log.warn(url)
-//                     log.warn(params)
-//                     log.warn(res.errMsg)
-//                 }
-//             }
-//         });
+export const simpleRequest = ({
+    params,
+    url,
+}) => {
+    return new Promise((resolve, reject) => {
+        uni.request({
+            url: url, //仅为示例，并非真实接口地址。
+            data: params,
+            header: {
+                'content-type': contentType,
+                certificate: store.state?.userInfo?.certificate || 'nothing',
+                "pf": import.meta.env.VITE_PF
+            },
+            method: 'post',
+            success: (res) => {
+                if (res.statusCode === 200) {
+                    resolve(res.data);
+                } else {
+                    reject(res.data)
+                }
+            },
+            fail: (res) => {
+                reject(res)
+            }
+        });
 
 
-//     })
+    })
 
-// }
+}
 
 export const bufferRequest = ({
     params,
