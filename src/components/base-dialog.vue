@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-09 15:51:55
+ * @LastEditTime: 2024-09-29 14:27:16
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -131,7 +131,7 @@ const showModal = () => {
 	setTimeout(() => {
         list.value.claerList();
 		list.value.refreshList();
-	}, 200);
+	}, 500);
 };
 
 // watch(() => props.params, (value) => {
