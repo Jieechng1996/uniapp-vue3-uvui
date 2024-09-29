@@ -286,7 +286,9 @@ export default defineComponent({
                     formData[item.key] = formData[item.key] || item.falseValue
                     formData[item.key + 'Flag'] = formData[item.key] == item.trueValue
                     element = <uv-switch v-model={formData[item.key + 'Flag']} size="28" disabled={item.disabled} onChange={(event) => {
-                        formData[item.key] = event ? item.trueValue : item.falseValue
+                        formData[item.key] = event ? item.trueValue : item.falseValue,
+                        typeof item.clearFunc == 'function' && item.clearFunc()
+                        typeof item.callbackFunc == 'function' && item.callbackFunc({})
                     }} {...item.props}></uv-switch>
                     break;
                 case 'radio':
