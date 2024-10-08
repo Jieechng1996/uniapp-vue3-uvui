@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-14 17:02:48
+ * @LastEditTime: 2024-10-08 14:24:37
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -11,7 +11,7 @@
             <view class="uni-primary" @click="confirm">确认</view>
         </view>
         <view class="popup-content">
-            <picker-view class="picker-view" @change="change">
+            <picker-view :value="[0]" class="picker-view" @change="change">
                 <picker-view-column>
                     <view class="line" v-for="(item, index) in actions" :key="index">{{ item.meaning }}</view>
                 </picker-view-column>
