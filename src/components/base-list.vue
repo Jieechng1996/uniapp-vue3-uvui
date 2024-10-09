@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-27 16:38:18
+ * @LastEditTime: 2024-10-09 09:35:02
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -84,7 +84,6 @@ const getNextList = async () => {
     if (list.value.length !== 0 && count.value === list.value.length) {
         return
     }
-    refreshType.value = true
     let { data, page } = await httpServer.postV1(props.url, {
         pageIndex: nextIndex.value,
         pageRows: props.pageSize,
@@ -94,9 +93,6 @@ const getNextList = async () => {
     nextIndex.value = page?.nextIndex
     count.value = page?.count
     emit('onLoad', list.value)
-    setTimeout(() => {
-        refreshType.value = false
-    }, 1000);
 }
 
 const emit = defineEmits(['onLoad', 'update:modelValue'])
