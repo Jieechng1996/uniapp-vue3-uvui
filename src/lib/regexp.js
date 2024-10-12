@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-08-02 15:14:41
  * @Author: guojiecheng
- * @LastEditTime: 2024-06-20 15:58:03
+ * @LastEditTime: 2024-10-12 10:22:33
  * @LastEditors: guojiecheng
  */
 export const phoneNumber = /^(1)\d{10}$/
@@ -14,7 +14,7 @@ export const email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
 export const plateNumber = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9学警港澳]{1}$/
 
-export const cash = /^([0-9]{1,3}(,[0-9]{3})*(\.[0-9]{0,2})?)/
+export const cash = /^(0|[1-9]\d*)(\.\d{1,2})?$/
 
 export const validateIdCardNum = (value) => {
     // 非法字符串
