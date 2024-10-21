@@ -13,20 +13,5 @@
 		"navigationBarTitleText": "标题",
 		"navigationBarBackgroundColor": "#CC3D3E",
 		"backgroundColor": "#ffffff"
-	},
-	"tabBar": {
-		"borderStyle": "white",
-		"position": "bottom",
-		"backgroundColor": "#ffffff",
-		"color": "#999",
-		"selectedColor": "#CC3D3E",
-		"list": [{
-				"text": "首页",
-				"pagePath": "pages/home/home",
-				"iconPath": "static/home.png",
-				"selectedIconPath": "static/home-select.png"
-			},
-
-		]
 	}
 }
