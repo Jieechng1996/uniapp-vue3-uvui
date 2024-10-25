@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-10-08 14:38:48
+ * @LastEditTime: 2024-10-25 17:05:17
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -56,7 +56,7 @@ const emit = defineEmits(['callback', 'update:modelValue', 'confirm', 'cancel', 
 
 const change = (event) => {
     let index = event.detail.value[0]
-    let item = actions.value[index]
+    let item = actions.value[index] || {}
     lookupCode.value = item.lookupCode
 }
 
