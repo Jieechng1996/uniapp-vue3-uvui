@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-10-26 17:53:58
+ * @LastEditTime: 2024-10-26 18:00:17
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -74,7 +74,7 @@
 				</view>
 
 				<view v-else class="w100p">
-					<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable :disabled="item.disabled || props.disabled" border="surround" v-bind="{ ...item.props }" />
+					<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable :disabled="item.disabled || props.disabled" border="surround" @change="() => emit("update:modelValue", toRaw(formData.value));" v-bind="{ ...item.props }" />
 				</view>
 			</uv-form-item>
 		</uv-form>
@@ -146,7 +146,7 @@ watch(
 	() => formData,
 	value => {
 		if (value) {
-			emit("update:modelValue", value);
+			// emit("update:modelValue", value);
 			emit("dataOnChange", toRaw(value)); //提供一个onChange方法，避免多个form存在时可能有响应式失效
 		}
 	},
