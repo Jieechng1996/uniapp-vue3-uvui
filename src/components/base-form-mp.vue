@@ -1,12 +1,12 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-04 17:19:41
+ * @LastEditTime: 2024-10-26 17:53:58
  * @LastEditors: guojiecheng
 -->
 <template>
 	<view className="w-full">
-		<uv-form labelPosition="left" :model="formData" :rules="rules" errorType="border-bottom" v-bind="props.formProps" ref="formRef">
+		<uv-form labelPosition="left" :model="formData" :rules="curRules" errorType="border-bottom" v-bind="props.formProps" ref="formRef">
 			<uv-form-item v-for="(item, index) in props.legend" :key="index" :label="item.label" :name="item.key" :prop="item.key" borderBottom :required="item.required" v-bind="{ ...props.formItemProps, ...item.formItemProps }">
 				<view v-if="item.type === 'date'" class="w-full">
 					<uv-datetime-picker
@@ -186,15 +186,16 @@ props.legend.forEach(item => {
 		rules[item.key] = [
 			...rules[item.key],
 			{
-				required: true,
-				message: item.label + "为必填字段",
-				trigger: ["blur", "change"],
+				validator: (rule, value, callback) => !!value,
+				message: item.label ? item.label + "为必填字段" : "请检查必填项",
+				trigger: ["change"],
 			},
 		];
 	}
 });
 
 curRules.value = Object.entries(rules).length === 0 ? null : rules;
+
 
 const formData = reactive({});
 
@@ -206,7 +207,11 @@ const validate = () =>
 	new Promise((resolve, reject) =>
 		formRef.value
 			.validate()
-			.then(res => resolve(res))
+			.then(res => {
+				debugger
+				console.log(res)
+				resolve(res)
+			})
 			.catch(e => reject(e))
 	);
 
