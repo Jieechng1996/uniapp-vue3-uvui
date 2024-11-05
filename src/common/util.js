@@ -154,6 +154,7 @@ export const getSelecterContent = (selector = '#id', component = null) => {
   })
 }
 
+
 export const downloadUrl = (url) => {
   uni.downloadFile({
     url,
