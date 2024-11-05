@@ -1,5 +1,5 @@
 import api from "../config/api";
-import { error, warning } from "./message";
+import { error, warning, toast } from "./message";
 
 // const QQMapuni = require('./qqmap-uni-jssdk.min.js');
 
@@ -168,7 +168,7 @@ export const downloadUrl = (url) => {
           toast("下载成功");
         },
         fail: (err) => {
-          toast(err.errMsg);
+          warning(err.errMsg);
         },
       });
       // #endif
@@ -177,7 +177,7 @@ export const downloadUrl = (url) => {
       // #endif
     },
     fail: (err) => {
-      toast(err.errMsg);
+      warning(err.errMsg);
     }
   });
 }
