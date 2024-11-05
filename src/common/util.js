@@ -158,16 +158,16 @@ export const getSelecterContent = (selector = '#id', component = null) => {
 export const downloadUrl = (url) => {
   uni.downloadFile({
     url,
-    success: function (res) {
+    success: (res) => {
       // #ifndef H5
       const filePath = res.tempFilePath;
       uni.openDocument({
         filePath: filePath,
         showMenu: true,
-        success: function (res) {
+        success: (res) => {
           toast("下载成功");
         },
-        fail: function (err) {
+        fail: (err) => {
           toast(err.errMsg);
         },
       });
@@ -176,6 +176,9 @@ export const downloadUrl = (url) => {
       toast("操作成功");
       // #endif
     },
+    fail: (err) => {
+      toast(err.errMsg);
+    }
   });
 }
 
