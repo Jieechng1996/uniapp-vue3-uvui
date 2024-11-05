@@ -140,9 +140,9 @@ export const setTemporaryData = (key, value) => {
 
 export const getTemporaryData = (key) => getApp().globalData.temporaryData[key]
 
-export const getSelecterContent = ( selector = '#id',component = null) => {
+export const getSelecterContent = (selector = '#id', component = null) => {
   let query = component ? uni.createSelectorQuery().in(component) : uni.createSelectorQuery()
-  selector instanceof Array ? selector.map( item => query.select(item).boundingClientRect()) : query.select(selector).boundingClientRect()
+  selector instanceof Array ? selector.map(item => query.select(item).boundingClientRect()) : query.select(selector).boundingClientRect()
   return new Promise((resolve, reject) => {
     try {
       query.exec(res => {
@@ -152,6 +152,30 @@ export const getSelecterContent = ( selector = '#id',component = null) => {
       reject(err)
     }
   })
+}
+
+export const downloadUrl = (url) => {
+  uni.downloadFile({
+    url,
+    success: function (res) {
+      // #ifndef H5
+      const filePath = res.tempFilePath;
+      uni.openDocument({
+        filePath: filePath,
+        showMenu: true,
+        success: function (res) {
+          toast("下载成功");
+        },
+        fail: function (err) {
+          toast(err.errMsg);
+        },
+      });
+      // #endif
+      // #ifdef H5
+      toast("操作成功");
+      // #endif
+    },
+  });
 }
 
 
