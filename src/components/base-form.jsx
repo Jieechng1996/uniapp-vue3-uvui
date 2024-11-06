@@ -136,11 +136,13 @@ export default defineComponent({
                                         formData[item.key] = dayjs(value).format('YYYY-MM')
                                     }
                                     emit('update:modelValue', toRaw(formData))
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}
                                 cancelText="清除选择"
                                 onCancel={() => {
                                     formData[item.key] = ''
                                     emit('update:modelValue', toRaw(formData))
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc()
                                 }}
                                 {...item.timeProps} ></uv-datetime-picker>
                             <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-right" disabled={item.disabled} onClick={() => !item.disabled && datetimePicker.value.open()}{...item.props} ></uv-input>
