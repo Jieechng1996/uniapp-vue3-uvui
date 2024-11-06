@@ -132,12 +132,15 @@ export default defineComponent({
                                     if (mode === 'date') {
                                         formData[item.key] = dayjs(value).format('YYYY-MM-DD')
                                     }
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    if (mode === 'year-month') {
+                                        formData[item.key] = dayjs(value).format('YYYY-MM')
+                                    }
+                                    emit('update:modelValue', toRaw(formData))
                                 }}
                                 cancelText="清除选择"
                                 onCancel={() => {
                                     formData[item.key] = ''
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    emit('update:modelValue', toRaw(formData))
                                 }}
                                 {...item.timeProps} ></uv-datetime-picker>
                             <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-right" disabled={item.disabled} onClick={() => !item.disabled && datetimePicker.value.open()}{...item.props} ></uv-input>
@@ -164,6 +167,7 @@ export default defineComponent({
                             formData[item.key] = range.before + ' ~ ' + range.after
                             formData[item.startDateKey] = range.before
                             formData[item.endDateKey] = range.after
+
                             emit('update:modelValue', toRaw(formData))
                             typeof item.callbackFunc == 'function' && item.callbackFunc(range)
                         }} {...item.calendarProps}></uv-calendars>
