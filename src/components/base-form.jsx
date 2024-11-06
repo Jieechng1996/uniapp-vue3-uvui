@@ -187,13 +187,13 @@ export default defineComponent({
                                     formData[item.key] = value.map(item => item.code).join('/')
                                     formData[item.key + 'Text'] = value.map(item => item.name).join('/')
                                     typeof item.callbackFunc == 'function' && item.confirmFunc(value)
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    emit('update:modelValue', toRaw(formData))
                                 }}
                                 onClear={() => {
                                     formData[item.key] = ''
                                     formData[item.key + 'Text'] = ''
                                     typeof item.callbackFunc == 'function' && item.clearFunc(value)
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    emit('update:modelValue', toRaw(formData))
                                 }}
                                 {...item.regionsProps}></base-regions>
                         </view>
@@ -218,7 +218,7 @@ export default defineComponent({
                                     formData[item.key] = value.lookupCode
                                     formData[item.key + 'Text'] = value.meaning
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    emit('update:modelValue', toRaw(formData))
                                 }} onOnLoad={(list) => {
                                     formData[item.key + 'Text'] = formData[item.key + 'Text'] || list.find(line => line.lookupCode === formData[item.key])?.meaning
                                 }}></base-lookup-code>
@@ -241,7 +241,7 @@ export default defineComponent({
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
                                     typeof item.callBackFunc == 'function' && item.callBackFunc(value)
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    emit('update:modelValue', toRaw(formData))
                                 }}
                                 onClear={() => {
                                     formData[item.key + 'Text'] = ''
@@ -249,7 +249,7 @@ export default defineComponent({
                                     typeof item.clearFunc == 'function' && item.clearFunc({})
                                     typeof item.callBackFunc == 'function' && item.callBackFunc({})
                                     typeof item.callbackFunc == 'function' && item.callbackFunc({})
-                                    emit('update:modelValue', toRaw(formData.value))
+                                    emit('update:modelValue', toRaw(formData))
                                 }} {...item.dialogProps}></base-dialog>
                         </view>
                     )
@@ -267,7 +267,7 @@ export default defineComponent({
                                 formData[item.key + 'Text'] = value[0].label
                                 typeof item.confirmFunc == 'function' && item.confirmFunc(value[0])
                                 typeof item.callbackFunc == 'function' && item.callbackFunc(value[0])
-                                emit('update:modelValue', toRaw(formData.value))
+                                emit('update:modelValue', toRaw(formData))
                             }
                         } onCancel={
                             () => {
@@ -275,7 +275,7 @@ export default defineComponent({
                                 formData[item.key + 'Text'] = ''
                                 typeof item.clearFunc == 'function' && item.clearFunc()
                                 typeof item.callbackFunc == 'function' && item.callbackFunc({})
-                                emit('update:modelValue', toRaw(formData.value))
+                                emit('update:modelValue', toRaw(formData))
                             }
                         }{...item.pickerProps}> </uv-picker>
                     </view>
@@ -293,7 +293,7 @@ export default defineComponent({
                                 formData[item.key + 'Text'] = value[item.keys?.value]
                                 typeof item.callBackFunc == 'function' && item.callBackFunc(value)
                                 typeof item.callbackFunc == 'function' && item.callbackFunc(value)
-                                emit('update:modelValue', toRaw(formData.value))
+                                emit('update:modelValue', toRaw(formData))
                             }}
                             {...item.remoteSelectProps}
                         />
@@ -308,25 +308,25 @@ export default defineComponent({
                         formData[item.key] = event ? item.trueValue : item.falseValue,
                         typeof item.callBackFunc == 'function' && item.callBackFunc(formData[item.key])
                         typeof item.callbackFunc == 'function' && item.callbackFunc(formData[item.key])
-                        emit('update:modelValue', toRaw(formData.value))
+                        emit('update:modelValue', toRaw(formData))
                     }} {...item.props}></uv-switch>
                     break;
                 case 'radio':
-                    element = <uv-radio-group v-model={formData[item.key]} {...item.props} {...item.radioGroupProps} disabled={item.disabled} onChange={() =>  emit('update:modelValue', toRaw(formData.value))}>
+                    element = <uv-radio-group v-model={formData[item.key]} {...item.props} {...item.radioGroupProps} disabled={item.disabled} onChange={() =>  emit('update:modelValue', toRaw(formData))}>
                         {item?.options.map((line, index) => {
                             return <uv-radio customStyle={{ marginRight: '16px' }} shape="square" label={line.value} name={line.key} {...item.radioProps}>{line.value}</uv-radio>
                         })}
                     </uv-radio-group>
                     break;
                 case 'textarea':
-                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} onChange={() =>  emit('update:modelValue', toRaw(formData.value))} />
+                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} onChange={() =>  emit('update:modelValue', toRaw(formData))} />
                     break
                 case 'phone':
                 case 'phoneNumber':
                 case 'input':
                 case 'email':
                 default:
-                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={() =>  emit('update:modelValue', toRaw(formData.value))} {...item.props} />
+                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={() =>  emit('update:modelValue', toRaw(formData))} {...item.props} />
                     break;
             }
 
