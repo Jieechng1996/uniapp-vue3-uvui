@@ -164,7 +164,8 @@ export default defineComponent({
                             formData[item.key] = range.before + ' ~ ' + range.after
                             formData[item.startDateKey] = range.before
                             formData[item.endDateKey] = range.after
-                            emit('update:modelValue', toRaw(formData.value))
+                            emit('update:modelValue', toRaw(formData))
+                            typeof item.callbackFunc == 'function' && item.callbackFunc(range)
                         }} {...item.calendarProps}></uv-calendars>
                     </view>
 
