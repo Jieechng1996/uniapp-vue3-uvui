@@ -169,7 +169,6 @@ export default defineComponent({
                             formData[item.key] = range.before + ' ~ ' + range.after
                             formData[item.startDateKey] = range.before
                             formData[item.endDateKey] = range.after
-
                             emit('update:modelValue', toRaw(formData))
                             typeof item.callbackFunc == 'function' && item.callbackFunc(range)
                         }} {...item.calendarProps}></uv-calendars>
@@ -186,14 +185,15 @@ export default defineComponent({
                                 onConfirm={(value) => {
                                     formData[item.key] = value.map(item => item.code).join('/')
                                     formData[item.key + 'Text'] = value.map(item => item.name).join('/')
-                                    typeof item.callbackFunc == 'function' && item.confirmFunc(value)
                                     emit('update:modelValue', toRaw(formData))
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}
                                 onClear={() => {
                                     formData[item.key] = ''
                                     formData[item.key + 'Text'] = ''
-                                    typeof item.callbackFunc == 'function' && item.clearFunc(value)
                                     emit('update:modelValue', toRaw(formData))
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc({})
+                                   
                                 }}
                                 {...item.regionsProps}></base-regions>
                         </view>
@@ -204,6 +204,8 @@ export default defineComponent({
                     element = <view>
                         <base-uploader v-model={formData[item.key + 's']} limit={1} disabled={item.disabled} onCallback={(file) => {
                             formData[item.key] = file.filesPath
+                            emit('update:modelValue', toRaw(formData))
+                            typeof item.callbackFunc == 'function' && item.callbackFunc(file)
                         }}></base-uploader>
                     </view>
                     break;
@@ -217,8 +219,8 @@ export default defineComponent({
                                 onCallback={(value) => {
                                     formData[item.key] = value.lookupCode
                                     formData[item.key + 'Text'] = value.meaning
-                                    typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                     emit('update:modelValue', toRaw(formData))
+                                    typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }} onOnLoad={(list) => {
                                     formData[item.key + 'Text'] = formData[item.key + 'Text'] || list.find(line => line.lookupCode === formData[item.key])?.meaning
                                 }}></base-lookup-code>
@@ -238,18 +240,18 @@ export default defineComponent({
                                 onConfirm={(value) => {
                                     formData[item.key + 'Text'] = value[item.keys?.value]
                                     formData[item.key] = value[item.keys?.key]
+                                    emit('update:modelValue', toRaw(formData))
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
                                     typeof item.callBackFunc == 'function' && item.callBackFunc(value)
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
-                                    emit('update:modelValue', toRaw(formData))
                                 }}
                                 onClear={() => {
                                     formData[item.key + 'Text'] = ''
                                     formData[item.key] = ''
+                                    emit('update:modelValue', toRaw(formData))
                                     typeof item.clearFunc == 'function' && item.clearFunc({})
                                     typeof item.callBackFunc == 'function' && item.callBackFunc({})
                                     typeof item.callbackFunc == 'function' && item.callbackFunc({})
-                                    emit('update:modelValue', toRaw(formData))
                                 }} {...item.dialogProps}></base-dialog>
                         </view>
                     )
@@ -265,17 +267,17 @@ export default defineComponent({
                             ({ value }) => {
                                 formData[item.key] = value[0].key
                                 formData[item.key + 'Text'] = value[0].label
+                                emit('update:modelValue', toRaw(formData))
                                 typeof item.confirmFunc == 'function' && item.confirmFunc(value[0])
                                 typeof item.callbackFunc == 'function' && item.callbackFunc(value[0])
-                                emit('update:modelValue', toRaw(formData))
                             }
                         } onCancel={
                             () => {
                                 formData[item.key] = ''
                                 formData[item.key + 'Text'] = ''
+                                emit('update:modelValue', toRaw(formData))
                                 typeof item.clearFunc == 'function' && item.clearFunc()
                                 typeof item.callbackFunc == 'function' && item.callbackFunc({})
-                                emit('update:modelValue', toRaw(formData))
                             }
                         }{...item.pickerProps}> </uv-picker>
                     </view>
@@ -291,9 +293,9 @@ export default defineComponent({
                             onCallback={(value) => {
                                 formData[item.key] = value[item.keys?.key]
                                 formData[item.key + 'Text'] = value[item.keys?.value]
+                                emit('update:modelValue', toRaw(formData))
                                 typeof item.callBackFunc == 'function' && item.callBackFunc(value)
                                 typeof item.callbackFunc == 'function' && item.callbackFunc(value)
-                                emit('update:modelValue', toRaw(formData))
                             }}
                             {...item.remoteSelectProps}
                         />
@@ -305,10 +307,10 @@ export default defineComponent({
                     formData[item.key] = formData[item.key] || item.falseValue
                     formData[item.key + 'Flag'] = formData[item.key] == item.trueValue
                     element = <uv-switch v-model={formData[item.key + 'Flag']} size="28" disabled={item.disabled} onChange={(event) => {
-                        formData[item.key] = event ? item.trueValue : item.falseValue,
+                        formData[item.key] = event ? item.trueValue : item.falseValue
+                        emit('update:modelValue', toRaw(formData))
                         typeof item.callBackFunc == 'function' && item.callBackFunc(formData[item.key])
                         typeof item.callbackFunc == 'function' && item.callbackFunc(formData[item.key])
-                        emit('update:modelValue', toRaw(formData))
                     }} {...item.props}></uv-switch>
                     break;
                 case 'radio':
