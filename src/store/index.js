@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-17 11:37:43
  * @Author: guojiecheng
- * @LastEditTime: 2024-07-23 11:55:48
+ * @LastEditTime: 2024-11-07 09:33:45
  * @LastEditors: guojiecheng
  */
 import { toRaw } from 'vue';
@@ -53,7 +53,7 @@ export default createStore({
     actions: {
         INIT_BASE_INFO({ commit }) {
             this.state.userInfo = toRaw(uni.getStorageSync('userInfo'))
-            this.state.lookupCodeList = uni.getStorageSync('lookupCodeList') || []
+            // this.state.lookupCodeList = uni.getStorageSync('lookupCodeList') || []
             this.state.loginInfo = toRaw(uni.getStorageSync('loginInfo'))
             //commit('SET_USER_INFO', storage.getItem('userInfo') || {})
             // commit('SET_LOGIN_INFO', storage.getItem('lgoinInfo') || {})
