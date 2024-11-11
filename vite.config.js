@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-11 11:07:26
+ * @LastEditTime: 2024-11-11 11:09:31
  * @LastEditors: guojiecheng
  */
 import { defineConfig } from 'vite'
@@ -25,11 +25,6 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [tailwindcss()],
-    },
-    preprocessorOptions: {
-      scss: {
-        additionalData: '@use "./src/styles/xxx.scss" as *;',
-      }
     }
   }
 })
