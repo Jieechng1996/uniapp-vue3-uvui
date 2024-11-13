@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-08-02 15:14:41
  * @Author: guojiecheng
- * @LastEditTime: 2024-10-12 10:22:33
+ * @LastEditTime: 2024-11-13 14:32:27
  * @LastEditors: guojiecheng
  */
 export const phoneNumber = /^(1)\d{10}$/
@@ -12,9 +12,11 @@ export const email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
 // export const plateNumber = /(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)|(^[\u4e00-\u9fa5]{1}16[^a-z_A-Z_0-9_?_*][A-Z_0-9]{5}$)/;//验证车牌号
 
-export const plateNumber = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9学警港澳]{1}$/
+// export const plateNumber = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9学警港澳]{1}$/
 
 export const cash = /^(0|[1-9]\d*)(\.\d{1,2})?$/
+
+export const chinese = /[\u4e00-\u9fff]+/g
 
 export const validateIdCardNum = (value) => {
     // 非法字符串
@@ -53,6 +55,32 @@ export const idCard = {
 }
 
 export const password = /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])).{6,16}$/
+
+export const handleLicenseNo = (value) => {
+    let c_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9港澳]{1}$/,
+        x_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{6}$/, // (([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))
+        l_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼]{1}[1-3]{1}[0-9]{2}[0-9A-Z]{2}领$/u,
+        sg_reg = /^[1-3]{1}[0-9]{2}[0-9A-Z]{3}使$/u
+    console.log(!c_reg.test(value) && !sg_reg.test(value) && !l_reg.test(value))
+    if (!value) return false
+    if (value.length == 7) {
+        if (!c_reg.test(value) && !sg_reg.test(value) && !l_reg.test(value)) {
+            return false
+        }
+    } else if (value.length == 8) {
+        if (!x_reg.test(value)) {
+            return false
+        }
+    } else {
+        value = ''
+        return false
+    }
+    return true
+}
+
+export const plateNumber = {
+    test: (value) => handleLicenseNo(value)
+}
 
 export default {
     phoneNumber,
