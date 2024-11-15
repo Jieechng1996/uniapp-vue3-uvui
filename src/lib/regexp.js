@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-08-02 15:14:41
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-13 14:32:27
+ * @LastEditTime: 2024-11-13 14:49:31
  * @LastEditors: guojiecheng
  */
 export const phoneNumber = /^(1)\d{10}$/
@@ -16,7 +16,7 @@ export const email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
 export const cash = /^(0|[1-9]\d*)(\.\d{1,2})?$/
 
-export const chinese = /[\u4e00-\u9fff]+/g
+export const chinese = /^[\u4e00-\u9fa5]{0,}$/
 
 export const validateIdCardNum = (value) => {
     // 非法字符串

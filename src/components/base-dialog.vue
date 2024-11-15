@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-29 14:27:16
+ * @LastEditTime: 2024-11-15 17:00:51
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -11,12 +11,21 @@
 				<!-- <uni-search-bar @confirm="search" v-model="searchValue" @input="input"
                         :placeholder="props.searchKey.placeholder">
                     </uni-search-bar> -->
-				<view v-if="props.searchKey.key" class="p-1">
-					<uv-search shape="square" :placeholder="props.searchKey.placeholder" @search="search" @input="input" :showAction="false">
+				<view v-if="props.searchKey.key" class="p-1 relative border-b">
+					<uv-search class="bg-gray-100" hape="square" shape="square" bgColor="#ffffff" :placeholder="props.searchKey.placeholder" @search="search" @input="input" :showAction="false">
 						<template #suffix>
 							<uv-button type="primary" size="small" @click="() => list.refreshList()">搜索</uv-button>
 						</template>
+						<template #prefix>
+							<uv-button type="success" size="small" plain class="mr-1" v-if="props.searchList.length !== 0" @click="() => showMore = !showMore">
+								<text>{{ `${ showMore ? '收起' : '展开' }` }}</text>
+							</uv-button>
+							<uv-icon name="search" size="24" color="#999" />
+						</template>
 					</uv-search>
+					<view class="p-2 z-10 absolute w-full left-0 border bg-gray-100" v-if="showMore">
+						<uv-input class="bg-white mb-1" v-model="params[item.key]" clearable :placeholder="item.placeholder"  border="surround" v-for="(item,index) in props.searchList" :key="index"></uv-input>
+					</view>
 				</view>
 				<view v-else class="text-center text-base p-2 font-bold" >
 					请选择
@@ -68,6 +77,10 @@ const props = defineProps({
 		type: Object,
 		default: {},
 	},
+	searchList: {
+		type: Array,
+		default: () => [],
+	},
 	api: {
 		type: String,
 		default: "",
@@ -93,6 +106,10 @@ const currentList = ref([]);
 const list = ref();
 
 const searchValue = ref("");
+
+const searchParams = ref({})
+
+const showMore = ref(false);
 
 const params = ref({});
 
