@@ -16,7 +16,7 @@ import uvSwitch from '../uni_modules/uv-switch/components/uv-switch/uv-switch.vu
 import uvRadioGroup from '../uni_modules/uv-radio/components/uv-radio-group/uv-radio-group.vue'
 import uvRadio from '../uni_modules/uv-radio/components/uv-radio/uv-radio.vue'
 import dayjs from "dayjs"
-import { email, phoneNumber } from '@/lib/regexp'
+import { email, phoneNumber , tel } from '@/lib/regexp'
 /*
  * @Date: 2023-07-21 09:25:31
  * @Author: guojiecheng
@@ -327,6 +327,7 @@ export default defineComponent({
                 case 'phoneNumber':
                 case 'input':
                 case 'email':
+                case 'tel':
                 default:
                     element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={() =>  emit('update:modelValue', toRaw(formData))} {...item.props} />
                     break;
@@ -356,6 +357,13 @@ export default defineComponent({
                     validator: (rule, value, callback) => !(value && !phoneNumber.test(value)), message: '手机号格式错误', trigger: ['change']
                 }]
             }
+            if (item.type === 'tel' || item.type === 'telPhone') {
+                rules[item.key] = [...rules[item.key], {
+                    validator: (rule, value, callback) => !(value && !tel.test(value)), message: '电话号码格式错误', trigger: ['change']
+                }]
+            }
+
+
             if (item.type === 'email') {
                 rules[item.key] = [...rules[item.key], {
                     validator: (rule, value, callback) => !(value && !email.test(value)), message: '邮箱格式错误', trigger: ['change']
