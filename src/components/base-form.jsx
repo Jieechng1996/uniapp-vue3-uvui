@@ -265,7 +265,7 @@ export default defineComponent({
                         <uv-input v-model={formData[item.key + 'Text' ]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && picker.value.open()} {...item.props} ></uv-input>
                         <uv-picker ref={picker} columns={[item.options]} keyName="label" cancelText="清除选择" onConfirm={
                             ({ value }) => {
-                                formData[item.key] = value[0].key
+                                formData[item.key] = value[0].value || value[0].key
                                 formData[item.key + 'Text'] = value[0].label
                                 emit('update:modelValue', toRaw(formData))
                                 typeof item.confirmFunc == 'function' && item.confirmFunc(value[0])
