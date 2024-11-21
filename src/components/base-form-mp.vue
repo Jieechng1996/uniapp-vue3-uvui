@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-01 15:16:48
+ * @LastEditTime: 2024-11-21 21:28:32
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -19,12 +19,15 @@
 									if (mode === 'date') {
 										formData[item.key] = dayjs(value).format('YYYY-MM-DD');
 									}
+									emit('update:modelValue', toRaw(formData))
 								}
+								
 							"
 							cancelText="清除选择"
 							@cancel="
 								() => {
 									formData[item.key] = '';
+									emit('update:modelValue', toRaw(formData))
 								}
 							"
 							v-bind="item.timeProps"></uv-datetime-picker>
@@ -40,6 +43,7 @@
 									formData[item.key] = range.before + ' ~ ' + range.after;
 									formData[item.startDateKey] = range.before;
 									formData[item.endDateKey] = range.after;
+									emit('update:modelValue', toRaw(formData))
 								}
 							"
 							v-bind="{ ...item.calendarProps }"></uv-calendars>
@@ -59,6 +63,7 @@
 								value => {
 									formData[item.key + 'Text'] = value[item.keys?.value];
 									formData[item.key] = value[item.keys?.key];
+									emit('update:modelValue', toRaw(formData))
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
 									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
 								}
@@ -67,6 +72,7 @@
 								() => {
 									formData[item.key + 'Text'] = '';
 									formData[item.key] = '';
+									emit('update:modelValue', toRaw(formData))
 									typeof item.clearFunc == 'function' && item.clearFunc({});
 									typeof item.callBackFunc == 'function' && item.callBackFunc({});
 								}
@@ -87,28 +93,28 @@
 								({ value }) => {
 									formData[item.key] = value[0].key;
 									formData[item.key + 'Text'] = value[0].label;
+									emit('update:modelValue', toRaw(formData))
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value[0]);
 									typeof item.callbackFunc == 'function' && item.callbackFunc(value[0]);
-									emit('update:modelValue', toRaw(formData.value));
 								}
 							"
 							@cancel="
 								() => {
 									formData[item.key] = '';
 									formData[item.key + 'Text'] = '';
+									emit('update:modelValue', toRaw(formData))
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value[0]);
 									typeof item.callbackFunc == 'function' && item.callbackFunc(value[0]);
-									emit('update:modelValue', toRaw(formData.value));
 								}
 							"></uv-picker>
 					</view>
 					<view v-else-if="item.type === 'radio'" class="w-full">
-						<uv-radio-group v-model="formData[item.key]" v-bind="{ ...item.props, ...item.radioGroupProps }" :disabled="item.disabled" @change="() => emit('update:modelValue', toRaw(formData.value))">
+						<uv-radio-group v-model="formData[item.key]" v-bind="{ ...item.props, ...item.radioGroupProps }" :disabled="item.disabled" @change="() => emit('update:modelValue', toRaw(formData))">
 							<uv-radio v-for="(line, index) in item?.options" :key="index" :customStyle="{ marginRight: '16px' }" shape="square" :label="line.value" :name="line.key" v-bind="radioProps">{{ line.value }}</uv-radio>
 						</uv-radio-group>
 					</view>
 					<view v-else class="w100p">
-						<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable :disabled="item.disabled" border="surround" v-bind="{ ...item.props }" />
+						<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable :disabled="item.disabled" border="surround" v-bind="{ ...item.props }" @change="() => emit('update:modelValue', toRaw(formData))" />
 					</view>
 				</uv-form-item>
 			</view>
