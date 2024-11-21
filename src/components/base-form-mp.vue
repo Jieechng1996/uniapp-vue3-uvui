@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-21 21:28:32
+ * @LastEditTime: 2024-11-21 21:31:55
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -181,7 +181,6 @@ watch(
 			for (let i in toRaw(value)) {
 				formData[i] = toRaw(value)[i];
 			}
-			console.log(formData);
 		}
 	},
 	{ deep: true, immediate: true }
