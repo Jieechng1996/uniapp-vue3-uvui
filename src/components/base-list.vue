@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-22 14:33:42
+ * @LastEditTime: 2024-11-22 14:39:33
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -54,6 +54,7 @@ import { onMounted, ref, defineExpose, defineEmits, watch } from "vue"
 import httpServer from "../common/httpServer";
 
 const refreshType = ref(false)
+
 
 const refreshList = async (refresh) => {
     refresh && (refreshType.value = true)
