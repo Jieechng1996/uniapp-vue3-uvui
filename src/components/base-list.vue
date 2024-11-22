@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2024-10-09 09:35:02
+ * @LastEditTime: 2024-11-22 14:33:42
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -10,7 +10,7 @@
 <template>
 
     <view class="h100p">
-        <scroll-view scroll-y scroll-with-animation class="h100p" refresher-enabled @refresherpulling="refreshList"
+        <scroll-view scroll-y scroll-with-animation class="h100p" refresher-enabled @refresherrefresh="refreshList"
             :refresher-triggered="refreshType" @scrolltolower="getNextList">
             <slot name="default" :list="list"></slot>
             <view v-if="list.length !== 0 && list.length === count">
