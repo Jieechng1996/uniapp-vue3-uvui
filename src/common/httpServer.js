@@ -1,6 +1,6 @@
 // import { env } from "../config/platform"
 import store from "../store"
-import { error, toast, warning , alert} from "./message"
+import { error, toast, warning, alert } from "./message"
 import dayjs from 'dayjs'
 
 // const pf = 'ECMOBuni_APPLET_DRIVER'
@@ -73,7 +73,7 @@ export const baseRequest = ({
                     //     log.warn(res.data.code, res.data.msg)
                     // }
                     // error(res.data.msg || codeMessage[res.statusCode] || '未知错误')
-                    if (['4000','4001'].some( item => item ===  res.data?.code )) {
+                    if (['4000', '4001'].some(item => item === res.data?.code)) {
                         // app.globalData.userInfo = {}
                         uni.removeStorageSync('userInfo')
                         toast(res.data.msg)
@@ -88,9 +88,12 @@ export const baseRequest = ({
             },
             fail: (res) => {
                 uni.hideLoading()
-                reject(res)
-                if(!import.meta.env.MODE === 'demo')
+                if (import.meta.env.MODE !== 'demo') {
                     error(res.errMsg || '未知错误')
+                }
+
+                reject(res)
+
                 // if (env === 'pro') {
                 //     log.warn(url)
                 //     log.warn(params)
@@ -192,40 +195,40 @@ export const bufferRequest = ({
 }
 
 export const uploadData = (url, filePath) => new Promise((resolve, reject) => {
-	console.log(filePath)
-	uni.showLoading({ title: '上传中', mask: true, })
-	uni.uploadFile({
-		url,
-		filePath,
-		name: 'file',
-		header: {
-			//Token: store.state.token,
-			certificate: store.state.userInfo.certificate,
-			pf: 'ECMOBMALL'
-		},
-		success: (res) => {
-			uni.hideLoading()
-			let result = JSON.parse(res.data)
-			if (res.statusCode === 200) {
-				if(result.success){
-					resolve(result)
-					
-				}else{
-					warning(result?.msg || '未知错误')
-					reject(result)
-				}
-				
-			} else {
-				warning(result?.msg || '未知错误')
-				reject(result)
-			}
-		},
-		fail: (err) => {
-			error(err.errMsg)
-			uni.hideLoading()
-			resolve(err)
-		}
-	});
+    console.log(filePath)
+    uni.showLoading({ title: '上传中', mask: true, })
+    uni.uploadFile({
+        url,
+        filePath,
+        name: 'file',
+        header: {
+            //Token: store.state.token,
+            certificate: store.state.userInfo.certificate,
+            pf: 'ECMOBMALL'
+        },
+        success: (res) => {
+            uni.hideLoading()
+            let result = JSON.parse(res.data)
+            if (res.statusCode === 200) {
+                if (result.success) {
+                    resolve(result)
+
+                } else {
+                    warning(result?.msg || '未知错误')
+                    reject(result)
+                }
+
+            } else {
+                warning(result?.msg || '未知错误')
+                reject(result)
+            }
+        },
+        fail: (err) => {
+            error(err.errMsg)
+            uni.hideLoading()
+            resolve(err)
+        }
+    });
 })
 
 
