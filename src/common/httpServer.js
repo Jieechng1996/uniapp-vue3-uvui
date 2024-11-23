@@ -50,7 +50,9 @@ export const baseRequest = ({
             method: method,
             timeout: timeout,
             success: (res) => {
-                console.log(res)
+                console.log({
+                    url, params , data: res.data
+                })
                 uni.hideLoading()
                 if (res.statusCode === 200) {
 
