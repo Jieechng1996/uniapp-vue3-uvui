@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-08-02 15:14:41
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-21 21:32:23
+ * @LastEditTime: 2024-11-23 11:05:53
  * @LastEditors: guojiecheng
  */
 export const phoneNumber = /^(1)\d{10}$/
@@ -62,11 +62,12 @@ export const handleLicenseNo = (value) => {
     let c_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9港澳]{1}$/,
         x_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{6}$/, // (([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))
         l_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼]{1}[1-3]{1}[0-9]{2}[0-9A-Z]{2}领$/u,
+        g_reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z][A-Z][A-Z0-9]{4}[挂]$/u,
         sg_reg = /^[1-3]{1}[0-9]{2}[0-9A-Z]{3}使$/u
     
     if (!value) return false
     if (value.length == 7) {
-        if (!c_reg.test(value) && !sg_reg.test(value) && !l_reg.test(value)) {
+        if (!c_reg.test(value) && !sg_reg.test(value) && !l_reg.test(value) && !g_reg.test(value)) {
             return false
         }
     } else if (value.length == 8) {

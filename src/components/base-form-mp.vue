@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-21 21:31:55
+ * @LastEditTime: 2024-11-23 11:19:49
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -19,15 +19,14 @@
 									if (mode === 'date') {
 										formData[item.key] = dayjs(value).format('YYYY-MM-DD');
 									}
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 								}
-								
 							"
 							cancelText="清除选择"
 							@cancel="
 								() => {
 									formData[item.key] = '';
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 								}
 							"
 							v-bind="item.timeProps"></uv-datetime-picker>
@@ -43,7 +42,7 @@
 									formData[item.key] = range.before + ' ~ ' + range.after;
 									formData[item.startDateKey] = range.before;
 									formData[item.endDateKey] = range.after;
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 								}
 							"
 							v-bind="{ ...item.calendarProps }"></uv-calendars>
@@ -63,7 +62,7 @@
 								value => {
 									formData[item.key + 'Text'] = value[item.keys?.value];
 									formData[item.key] = value[item.keys?.key];
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
 									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
 								}
@@ -72,12 +71,34 @@
 								() => {
 									formData[item.key + 'Text'] = '';
 									formData[item.key] = '';
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 									typeof item.clearFunc == 'function' && item.clearFunc({});
 									typeof item.callBackFunc == 'function' && item.callBackFunc({});
 								}
 							"
 							v-bind="{ ...item.dialogProps }"></base-dialog>
+					</view>
+					<view v-else-if="item.type === 'lookup' || item.type === 'lookupCode'" class="w-full">
+						<view @click="() => !item.disabled && proxy.$refs['lookup' + index][0].showModal()">
+							<uv-input class="pointer-events-none" v-model="formData[item.key + 'Text']" readonly :placeholder="item.placeholder || '请选择'" :disabled="item.disabled" clearable border="surround" suffixIcon="arrow-down"></uv-input>
+						</view>
+						<base-lookup-code
+							:ref="'lookup' + index"
+							:lookupType="item.lookupType"
+							:systemCode="item.systemCode"
+							@callback="
+								value => {
+									formData[item.key] = value.lookupCode;
+									formData[item.key + 'Text'] = value.meaning;
+									emit('update:modelValue', toRaw(formData));
+									typeof item.callbackFunc == 'function' && item.callbackFunc(value);
+								}
+							"
+							@onLoad="
+								list => {
+									formData[item.key + 'Text'] = formData[item.key + 'Text'] || list.find(line => line.lookupCode === formData[item.key])?.meaning;
+								}
+							"></base-lookup-code>
 					</view>
 					<view v-else-if="item.type === 'select'" class="w-full">
 						<view @click="() => !item.disabled && proxy.$refs['select' + index][0].open()">
@@ -93,7 +114,7 @@
 								({ value }) => {
 									formData[item.key] = value[0].key;
 									formData[item.key + 'Text'] = value[0].label;
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value[0]);
 									typeof item.callbackFunc == 'function' && item.callbackFunc(value[0]);
 								}
@@ -102,7 +123,7 @@
 								() => {
 									formData[item.key] = '';
 									formData[item.key + 'Text'] = '';
-									emit('update:modelValue', toRaw(formData))
+									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value[0]);
 									typeof item.callbackFunc == 'function' && item.callbackFunc(value[0]);
 								}
