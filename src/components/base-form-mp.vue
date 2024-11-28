@@ -1,13 +1,18 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-23 11:19:49
+ * @LastEditTime: 2024-11-28 18:52:42
  * @LastEditors: guojiecheng
 -->
 <template>
 	<view className="w-full">
 		<uv-form labelPosition="left" :model="formData" :rules="curRules" errorType="border-bottom" v-bind="props.formProps" ref="formRef">
-			<view v-for="(item, index) in props.legend" :key="index">
+			<view
+				v-for="(item, index) in props.legend.map(item => {
+					item.disabled = item.disabled ?? (item.disabledFunc && item.disabledFunc()) ?? props.disabled;
+					return item;
+				})"
+				:key="index">
 				<uv-form-item :label="item.label" :name="item.key" :prop="item.key" borderBottom :required="item.required" v-if="item.showFunc ? item.showFunc() : true" v-bind="{ ...props.formItemProps, ...item.formItemProps }">
 					<view v-if="item.type === 'date'" class="w-full">
 						<uv-datetime-picker
@@ -30,7 +35,9 @@
 								}
 							"
 							v-bind="item.timeProps"></uv-datetime-picker>
-						<uv-input className="w100p" v-model="formData[item.key]" :placeholder="item.placeholder || '请选择'" clearable readonly border="surround" suffixIcon="arrow-right" @click="() => proxy.$refs['datetimePicker' + index].value.open()" v-bind="{ ...item.props }"></uv-input>
+						<view @click="() => !item.disabled && proxy.$refs['datetimePicker' + index][0].open()">
+							<uv-input className="w100p" v-model="formData[item.key]" :disabled="item.disabled" :placeholder="item.placeholder || '请选择'" clearable readonly border="surround" suffixIcon="arrow-right" v-bind="{ ...item.props }"></uv-input>
+						</view>
 					</view>
 					<view v-else-if="item.type === 'dateRange' || item.type === 'range'">
 						<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请选择'" clearable readonly border="surround" suffixIcon="arrow-down" :disabled="item.disabled" @click="() => !(item.disabled || props.disabled) && proxy.$refs['range' + index].open()" v-bind="{ ...item.props }"></uv-input>
@@ -124,15 +131,26 @@
 									formData[item.key] = '';
 									formData[item.key + 'Text'] = '';
 									emit('update:modelValue', toRaw(formData));
-									typeof item.confirmFunc == 'function' && item.confirmFunc(value[0]);
-									typeof item.callbackFunc == 'function' && item.callbackFunc(value[0]);
+									typeof item.confirmFunc == 'function' && item.confirmFunc({});
+									typeof item.callbackFunc == 'function' && item.callbackFunc({});
 								}
 							"></uv-picker>
 					</view>
 					<view v-else-if="item.type === 'radio'" class="w-full">
 						<uv-radio-group v-model="formData[item.key]" v-bind="{ ...item.props, ...item.radioGroupProps }" :disabled="item.disabled" @change="() => emit('update:modelValue', toRaw(formData))">
-							<uv-radio v-for="(line, index) in item?.options" :key="index" :customStyle="{ marginRight: '16px' }" shape="square" :label="line.value" :name="line.key" v-bind="radioProps">{{ line.value }}</uv-radio>
+							<uv-radio v-for="(line, index) in item?.options" :key="index" :customStyle="{ marginRight: '16px', marginBottom: '8px' }" shape="square" :label="line.value" :name="line.key" v-bind="item.radioProps">{{ line.value }}</uv-radio>
 						</uv-radio-group>
+					</view>
+					<view v-else-if="item.type === 'checkbox'" class="w-full">
+						<uv-checkbox-group v-model="formData[item.key+'s']" :disabled="item.disabled"  @change="(detail) => {
+							formData[item.key] = detail.join(',')
+							emit('update:modelValue', toRaw(formData))
+						}"  v-bind="{ ...item.props, ...item.radioGroupProps }">
+							<uv-checkbox :customStyle="{ marginRight: '16px', marginBottom: '8px' }" v-for="(item, index) in item?.options" :key="index" :label="item.value" :name="item.key"  v-bind="item.checkboxProps"></uv-checkbox>
+						</uv-checkbox-group>
+					</view>
+					<view v-else-if="item.type === 'text'" class="w-full">
+						{{ formData[item.key] }}
 					</view>
 					<view v-else class="w100p">
 						<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable :disabled="item.disabled" border="surround" v-bind="{ ...item.props }" @change="() => emit('update:modelValue', toRaw(formData))" />
