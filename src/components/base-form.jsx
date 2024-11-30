@@ -135,6 +135,12 @@ export default defineComponent({
                                     if (mode === 'year-month') {
                                         formData[item.key] = dayjs(value).format('YYYY-MM')
                                     }
+                                    if(mode === 'datetime'){
+                                        formData[item.key] = dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+                                    }
+                                    if(mode === 'year'){
+                                        formData[item.key] = dayjs(value).format('YYYY')
+                                    }
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}

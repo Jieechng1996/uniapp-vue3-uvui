@@ -182,6 +182,48 @@ export const downloadUrl = (url) => {
   });
 }
 
+export const checkLocationSetting = () => {
+
+  return new Promise(( resolve , reject ) => {
+    uni.getSetting({
+      success(res) {
+        if (!res.authSetting["scope.userLocation"]) {
+          message.prompt({
+            msg: "需要获取您的地理位置，请确认授权，否则无法获取您所需数据",
+            type: "confirm",
+            title: "是否授权当前位置",
+            callBack: () => {
+              uni.openSetting({
+                success: (dataAu) => {
+                  if (dataAu.authSetting["scope.userLocation"]) {
+                    toast("位置授权成功");
+                    resolve("位置授权成功")
+                  } else {
+                    toast("位置授权失败");
+                    reject("位置授权失败")
+                  }
+                },
+              });
+            },
+            cancelCallBack: () => {
+              reject()
+              toast("位置授权失败");
+              reject("位置授权失败")
+            },
+          });
+          reject()
+        }else{
+          resolve()
+        }
+      },
+      fail(err){
+        message.warning(err.errMsg)
+        reject(err)
+      }
+    });
+  })
+  
+}
 
 export default {
   updateMiniProgram
