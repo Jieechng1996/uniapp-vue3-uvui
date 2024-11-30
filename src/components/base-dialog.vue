@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-15 17:00:51
+ * @LastEditTime: 2024-11-30 11:11:06
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -14,25 +14,34 @@
 				<view v-if="props.searchKey.key" class="p-1 relative border-b">
 					<uv-search class="bg-gray-100" hape="square" shape="square" bgColor="#ffffff" :placeholder="props.searchKey.placeholder" @search="search" @input="input" :showAction="false">
 						<template #suffix>
-							<uv-button type="primary" size="small" @click="() => list.refreshList()">搜索</uv-button>
+							<uv-button
+								type="primary"
+								size="small"
+								@click="
+									() => {
+										showMore = false;
+										list.refreshList();
+									}
+								"
+								>搜索</uv-button
+							>
 						</template>
 						<template #prefix>
-							<uv-button type="success" size="small" plain class="mr-1" v-if="props.searchList.length !== 0" @click="() => showMore = !showMore">
-								<text>{{ `${ showMore ? '收起' : '展开' }` }}</text>
+							<uv-button type="success" size="small" plain class="mr-1" v-if="props.searchList.length !== 0" @click="() => (showMore = !showMore)">
+								<text>{{ `${showMore ? "收起" : "展开"}` }}</text>
 							</uv-button>
 							<uv-icon name="search" size="24" color="#999" />
 						</template>
 					</uv-search>
-					<view class="p-2 z-10 absolute w-full left-0 border bg-gray-100" v-if="showMore">
-						<uv-input class="bg-white mb-1" v-model="params[item.key]" clearable :placeholder="item.placeholder"  border="surround" v-for="(item,index) in props.searchList" :key="index"></uv-input>
-					</view>
 				</view>
-				<view v-else class="text-center text-base p-2 font-bold" >
-					请选择
+
+				<view v-else class="text-center text-base p-2 font-bold"> 请选择 </view>
+				<view class="p-2 w-full border bg-gray-100" v-if="showMore">
+					<uv-input class="bg-white mb-1" v-model="params[item.key]" clearable :placeholder="item.placeholder" border="surround" v-for="(item, index) in props.searchList" :key="index"></uv-input>
 				</view>
-				<view style="height: calc(100% - 103px)">
+				<view  :style="{ 'height': showMore ? height : 'calc( 100% - 103px)' }">
 					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
-						<template #default="{ list : dataList }">
+						<template #default="{ list: dataList }">
 							<uv-list>
 								<uv-list-item v-for="(item, index) in currentList" :key="index" :show-arrow="false" clickable @click="() => click(index)">
 									<template v-slot:body>
@@ -64,7 +73,7 @@
 	</div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import baseList from "./base-list";
 import { watch, defineExpose, defineEmits } from "vue";
 
@@ -107,11 +116,13 @@ const list = ref();
 
 const searchValue = ref("");
 
-const searchParams = ref({})
+const searchParams = ref({});
 
 const showMore = ref(false);
 
 const params = ref({});
+
+const height = computed(() => `calc(100% - 103px - ${props.searchList.length * 60}px)`)
 
 const input = value => {
 	params.value[props.searchKey.key] = value;
@@ -146,7 +157,7 @@ const showModal = () => {
 		params.value[i] = props.params[i];
 	}
 	setTimeout(() => {
-        list.value.claerList();
+		list.value.claerList();
 		list.value.refreshList();
 	}, 500);
 };
