@@ -242,7 +242,7 @@ export default defineComponent({
                         <view className="w100p">
                             <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
                             <base-dialog search-key={item.searchKey} ref={dialog} params={item.params || {}}
-                                api={item.api} keys={item.keys}
+                                api={item.api} keys={item.keys} columns={item.columns || []}
                                 onConfirm={(value) => {
                                     formData[item.key + 'Text'] = value[item.keys?.value]
                                     formData[item.key] = value[item.keys?.key]

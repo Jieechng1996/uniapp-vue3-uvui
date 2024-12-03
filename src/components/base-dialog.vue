@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-30 11:11:06
+ * @LastEditTime: 2024-12-03 11:50:29
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -51,7 +51,11 @@
 												<slot name="content" v-bind:item="item"></slot>
 											</view>
 											<view v-else style="width: 100%">
-												{{ item[props.keys.value] }}
+												<view>{{ item[props.keys.value] }}</view>
+												<view v-for="(line, subscript) in columns" :key="subscript" class="text-xs leading-5">
+													{{ `${line.label}：${item.value || "-"}` }}
+												</view>
+												
 											</view>
 										</view>
 									</template>
@@ -106,6 +110,10 @@ const props = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
+	columns: {
+		type: Array,
+		default: []
+	}
 });
 
 const popup = ref();
@@ -148,7 +156,7 @@ const clear = () => {
 	hideModal();
 };
 
-const search = () => list.value.refresh();
+const search = () => list.value.refreshList();
 
 const showModal = () => {
 	popup.value.open();
