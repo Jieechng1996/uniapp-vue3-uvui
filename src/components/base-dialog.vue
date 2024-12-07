@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-12-03 11:50:29
+ * @LastEditTime: 2024-12-03 18:12:47
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -19,7 +19,6 @@
 								size="small"
 								@click="
 									() => {
-										showMore = false;
 										list.refreshList();
 									}
 								"
@@ -37,9 +36,16 @@
 
 				<view v-else class="text-center text-base p-2 font-bold"> 请选择 </view>
 				<view class="p-2 w-full border bg-gray-100" v-if="showMore">
-					<uv-input class="bg-white mb-1" v-model="params[item.key]" clearable :placeholder="item.placeholder" border="surround" v-for="(item, index) in props.searchList" :key="index"></uv-input>
+					<view v-for="(item, index) in props.searchList" :key="index" class=" mb-1">
+						<view v-if="item.type === 'lookup'" @click="() => proxy.$refs['lookup' + index][0].showModal()">
+							<uv-input class="pointer-events-none bg-white" v-model="params[item.key + 'Text']" readonly :placeholder="item.placeholder || '请选择'" clearable border="surround" suffixIcon="arrow-down"></uv-input>
+						</view>
+						<view v-else>
+							<uv-input class="bg-white" v-model="params[item.key]" clearable :placeholder="item.placeholder" border="surround"></uv-input>
+						</view>
+					</view>
 				</view>
-				<view  :style="{ 'height': showMore ? height : 'calc( 100% - 103px)' }">
+				<view :style="{ height: showMore ? height : 'calc( 100% - 103px)' }">
 					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
 						<template #default="{ list: dataList }">
 							<uv-list>
@@ -55,7 +61,6 @@
 												<view v-for="(line, subscript) in columns" :key="subscript" class="text-xs leading-5">
 													{{ `${line.label}：${item.value || "-"}` }}
 												</view>
-												
 											</view>
 										</view>
 									</template>
@@ -74,13 +79,28 @@
 				</view>
 			</view>
 		</uv-popup>
+		<view v-for="(item, index) in props.searchList" :key="index" class="bg-white mb-1">
+			<base-lookup-code
+				v-if="item.type === 'lookup'"
+				:ref="'lookup' + index"
+				:lookupType="item.lookupType"
+				:systemCode="item.systemCode"
+				@callback="
+					value => {
+						params[item.key] = value.lookupCode;
+						params[item.key + 'Text'] = value.meaning;
+					}
+				"></base-lookup-code>
+			<view v-else> </view>
+		</view>
 	</div>
 </template>
 <script setup>
 import { computed, ref } from "vue";
 import baseList from "./base-list";
-import { watch, defineExpose, defineEmits } from "vue";
+import { watch, defineExpose, defineEmits, getCurrentInstance } from "vue";
 
+const { proxy } = getCurrentInstance();
 const props = defineProps({
 	keys: {
 		type: Object,
@@ -112,8 +132,8 @@ const props = defineProps({
 	},
 	columns: {
 		type: Array,
-		default: []
-	}
+		default: [],
+	},
 });
 
 const popup = ref();
@@ -130,7 +150,7 @@ const showMore = ref(false);
 
 const params = ref({});
 
-const height = computed(() => `calc(100% - 103px - ${props.searchList.length * 60}px)`)
+const height = computed(() => `calc(100% - 104px - 17px - ${props.searchList.length * 41}px)`);
 
 const input = value => {
 	params.value[props.searchKey.key] = value;
