@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-12-07 18:04:37
+ * @LastEditTime: 2024-12-16 15:12:16
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -71,6 +71,8 @@ const getLookupCode = async () => {
 		let { data } = await fetch.baseLookupValuesService_find({
 			lookupType: props.lookupType,
 			systemCode: props.systemCode,
+			pageIndex: 1,
+			pageRows: 1000,
 		});
 		lookupCodeList = data;
 		lookupCodes = [...lookupCodes, ...data];

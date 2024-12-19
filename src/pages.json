@@ -7,6 +7,12 @@
 				"navigationBarTitleText": "标题"
 			}
 		},
+		{
+			"path": "pages/webView",
+			"style": {
+				"navigationBarTitleText": "标题"
+			}
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-28 18:52:42
+ * @LastEditTime: 2024-12-17 14:56:08
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -24,7 +24,11 @@
 									if (mode === 'date') {
 										formData[item.key] = dayjs(value).format('YYYY-MM-DD');
 									}
+									if (mode === 'year-month') {
+                                        formData[item.key] = dayjs(value).format('YYYY-MM')
+                                    }
 									emit('update:modelValue', toRaw(formData));
+									typeof item.callbackFunc == 'function' && item.callbackFunc(value)
 								}
 							"
 							cancelText="清除选择"
@@ -142,18 +146,36 @@
 						</uv-radio-group>
 					</view>
 					<view v-else-if="item.type === 'checkbox'" class="w-full">
-						<uv-checkbox-group v-model="formData[item.key+'s']" :disabled="item.disabled"  @change="(detail) => {
-							formData[item.key] = detail.join(',')
-							emit('update:modelValue', toRaw(formData))
-						}"  v-bind="{ ...item.props, ...item.radioGroupProps }">
-							<uv-checkbox :customStyle="{ marginRight: '16px', marginBottom: '8px' }" v-for="(item, index) in item?.options" :key="index" :label="item.value" :name="item.key"  v-bind="item.checkboxProps"></uv-checkbox>
+						<uv-checkbox-group
+							v-model="formData[item.key + 's']"
+							:disabled="item.disabled"
+							@change="
+								detail => {
+									formData[item.key] = detail.join(',');
+									emit('update:modelValue', toRaw(formData));
+								}
+							"
+							v-bind="{ ...item.props, ...item.radioGroupProps }">
+							<uv-checkbox :customStyle="{ marginRight: '16px', marginBottom: '8px' }" v-for="(item, index) in item?.options" :key="index" :label="item.value" :name="item.key" v-bind="item.checkboxProps"></uv-checkbox>
 						</uv-checkbox-group>
 					</view>
 					<view v-else-if="item.type === 'text'" class="w-full">
 						{{ formData[item.key] }}
 					</view>
 					<view v-else class="w100p">
-						<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable :disabled="item.disabled" border="surround" v-bind="{ ...item.props }" @change="() => emit('update:modelValue', toRaw(formData))" />
+						<uv-input
+							v-model="formData[item.key]"
+							:placeholder="item.placeholder || '请输入'"
+							clearable
+							:disabled="item.disabled"
+							border="surround"
+							v-bind="{ ...item.props }"
+							@change="
+								value => {
+									emit('update:modelValue', toRaw(formData));
+									typeof item.change === 'function' && item.change(value);
+								}
+							" />
 					</view>
 				</uv-form-item>
 			</view>
