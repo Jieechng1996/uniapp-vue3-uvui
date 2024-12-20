@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-12-03 18:12:47
+ * @LastEditTime: 2024-12-19 18:54:23
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -59,7 +59,7 @@
 											<view v-else style="width: 100%">
 												<view>{{ item[props.keys.value] }}</view>
 												<view v-for="(line, subscript) in columns" :key="subscript" class="text-xs leading-5">
-													{{ `${line.label}：${item.value || "-"}` }}
+													{{ `${line.label}：${item[line.value] || "-"}` }}
 												</view>
 											</view>
 										</view>
