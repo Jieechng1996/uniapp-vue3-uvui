@@ -1,6 +1,8 @@
+import { toRaw } from "vue";
 import api from "../config/api";
 import { error, warning, toast } from "./message";
-
+import store from '@/store/index'
+import fetch from "../config/fetch";
 // const QQMapuni = require('./qqmap-uni-jssdk.min.js');
 
 // const qqmapsdk = new QQMapuni({
@@ -84,6 +86,11 @@ export const simpleNavigateTo = (path, params) => {
     url = path + '?' + requestParams.join('&')
   }
   uni.navigateTo({ url: url })
+}
+
+export const menuNavigateTo = (path, params = {}) => {
+  let { menuId } = getInstanceOption()
+  simpleNavigateTo(path, { ...params, menuId })
 }
 
 export const uploadFile = (filePath) => new Promise((resolve, reject) => {
@@ -224,6 +231,26 @@ export const checkLocationSetting = () => {
   })
   
 }
+
+export const getInstanceOption = () =>  getCurrentPages()?.[getCurrentPages()?.length - 1]?.options; // 获取当前页面实例
+
+export const getlookupMeaning = async (lookupType, lookupCode , systemCode = 'BASE') => {
+  let lookupCodes = toRaw(store.state.lookupCodeList) || [];
+  let lookupCodeList = lookupCodes.filter(item => item.lookupType === lookupType && item.systemCode === systemCode);
+  if (lookupCodeList.length === 0) {
+    let { data } = await fetch.baseLookupValuesService_find({
+      lookupType: lookupType,
+      systemCode,
+      pageIndex: 1,
+      pageRows: 1000,
+    });
+    lookupCodeList = data;
+    lookupCodes = [...lookupCodes, ...data];
+    store.commit("SET_LOOKUP_CODE_LIST", lookupCodes);
+  }
+
+  return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
+};
 
 export default {
   updateMiniProgram

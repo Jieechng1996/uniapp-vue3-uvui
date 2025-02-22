@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-17 11:37:43
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-07 09:33:45
+ * @LastEditTime: 2025-02-19 17:55:37
  * @LastEditors: guojiecheng
  */
 import { toRaw } from 'vue';
@@ -15,11 +15,15 @@ export default createStore({
             lookupCodeList: [],
             shoppingCartCount: 0,
             customerList: [],
-            primaryCustomer: {}
+            primaryCustomer: {},
+            refreshFlag: false
         }
 
     },
     mutations: {
+        SET_REFRESH_FUNC(state, data) {
+            state.refreshFunc = data
+        },
         SET_USER_INFO(state, data) {
             state.userInfo = data
             uni.setStorageSync('userInfo', data);

@@ -240,11 +240,11 @@ export default defineComponent({
                     let dialog = ref()
                     element = (
                         <view className="w100p">
-                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
+                             <uv-input v-model={formData[item.value || item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
                             <base-dialog search-key={item.searchKey} ref={dialog} params={item.params || {}}
                                 api={item.api} keys={item.keys} columns={item.columns || []}
                                 onConfirm={(value) => {
-                                    formData[item.key + 'Text'] = value[item.keys?.value]
+                                    formData[item.value || item.key + 'Text'] = value[item.keys?.value]
                                     formData[item.key] = value[item.keys?.key]
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
@@ -252,7 +252,7 @@ export default defineComponent({
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}
                                 onClear={() => {
-                                    formData[item.key + 'Text'] = ''
+                                    formData[item.value ||item.key + 'Text'] = ''
                                     formData[item.key] = ''
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.clearFunc == 'function' && item.clearFunc({})

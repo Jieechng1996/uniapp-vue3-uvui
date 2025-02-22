@@ -8,7 +8,7 @@
 			}
 		},
 		{
-			"path": "pages/webView",
+			"path": "pages_components/webView/webView",
 			"style": {
 				"navigationBarTitleText": "标题"
 			}

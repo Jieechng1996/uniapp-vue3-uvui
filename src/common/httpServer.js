@@ -32,13 +32,14 @@ export const baseRequest = ({
     method = 'post',
     url,
     contentType = 'application/json',
-    timeout = 60000,
+    timeout = 30000,
 }) => {
     return new Promise((resolve, reject) => {
         uni.showLoading({
             title: '加载中',
             mask: true
         });
+        console.log('request start !!')
         uni.request({
             url: url, //仅为示例，并非真实接口地址。
             data: params,
@@ -51,8 +52,9 @@ export const baseRequest = ({
             timeout: timeout,
             success: (res) => {
                 console.log({
-                    url, params , data: res.data
+                    url, params: JSON.stringify(params), data: JSON.stringify(res.data),
                 })
+                console.log('request end !!')
                 uni.hideLoading()
                 if (res.statusCode === 200) {
 
@@ -91,9 +93,12 @@ export const baseRequest = ({
             fail: (res) => {
                 uni.hideLoading()
                 if (import.meta.env.MODE !== 'demo') {
-                    error(res.errMsg || '未知错误')
+                    error(`请求异常，请重试！【${res.errMsg || '未知错误'}】`)
                 }
-
+                console.log({
+                    url, params: JSON.stringify(params), res: JSON.stringify(res),
+                })
+                console.log('request end !!')
                 reject(res)
 
                 // if (env === 'pro') {
