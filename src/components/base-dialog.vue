@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-12-19 18:54:23
+ * @LastEditTime: 2025-04-01 11:13:58
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -36,7 +36,7 @@
 
 				<view v-else class="text-center text-base p-2 font-bold"> 请选择 </view>
 				<view class="p-2 w-full border bg-gray-100" v-if="showMore">
-					<view v-for="(item, index) in props.searchList" :key="index" class=" mb-1">
+					<view v-for="(item, index) in props.searchList" :key="index" class="mb-1">
 						<view v-if="item.type === 'lookup'" @click="() => proxy.$refs['lookup' + index][0].showModal()">
 							<uv-input class="pointer-events-none bg-white" v-model="params[item.key + 'Text']" readonly :placeholder="item.placeholder || '请选择'" clearable border="surround" suffixIcon="arrow-down"></uv-input>
 						</view>
@@ -134,6 +134,10 @@ const props = defineProps({
 		type: Array,
 		default: [],
 	},
+	type: {
+		type: String,
+		default: "radio",
+	},
 });
 
 const popup = ref();
@@ -157,22 +161,37 @@ const input = value => {
 };
 
 const click = index => {
-	currentList.value.forEach(item => (item.checked = false));
+	if (props.type === "radio") {
+		currentList.value.forEach(item => (item.checked = false));
+	}
 	currentList.value[index].checked = true;
 };
 
 const emit = defineEmits(["confirm", "clear", "callback"]);
 
 const confirm = () => {
-	let item = currentList.value.find(item => item.checked) || {};
-	emit("confirm", item);
-	emit("callback", item);
+	if (props.type === "radio") {
+		let item = currentList.value.find(item => item.checked) || {};
+		emit("confirm", item);
+		emit("callback", item);
+	} else {
+		let items = currentList.value.filter(item => item.checked) || [];
+		emit("confirm", items);
+		emit("callback", items);
+	}
+
 	hideModal();
 };
 
 const clear = () => {
-	emit("clear", {});
-	emit("callback", {});
+	if (props.type === "radio") {
+		emit("clear", {});
+		emit("callback", {});
+	} else {
+		emit("clear", []);
+		emit("callback", []);
+	}
+
 	hideModal();
 };
 

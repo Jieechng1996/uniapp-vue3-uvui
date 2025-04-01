@@ -125,7 +125,7 @@ export default defineComponent({
                 case 'date':
                     const datetimePicker = ref()
                     element = (
-                        <view className="w100p">
+                        <view className="w-full">
                             <uv-datetime-picker ref={datetimePicker} mode="date"
                                 value={dayjs().valueOf()}
                                 onConfirm={({ value, mode }) => {
@@ -169,7 +169,7 @@ export default defineComponent({
                     //             }} ></uv-icon>}
                     //     </view>
                     // }
-                    element = <view className="w100p">
+                    element = <view className="w-full">
                         <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && range.value.open()} {...item.props} ></uv-input>
                         <uv-calendars ref={range} mode="range" onConfirm={({ range }) => {
                             formData[item.key] = range.before + ' ~ ' + range.after
@@ -185,7 +185,7 @@ export default defineComponent({
                 case 'regions':
                     let regions = ref()
                     element = (
-                        <view className="w100p">
+                        <view className="w-full">
                             <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && regions.value.showModal()} {...item.props} ></uv-input>
                             <base-regions ref={regions}
                                 onConfirm={(value) => {
@@ -212,14 +212,14 @@ export default defineComponent({
                             formData[item.key] = file.filesPath
                             emit('update:modelValue', toRaw(formData))
                             typeof item.callbackFunc == 'function' && item.callbackFunc(file)
-                        }}></base-uploader>
+                        }} {...item.props}></base-uploader>
                     </view>
                     break;
                 case 'lookup':
                 case 'lookupCode':
                     let lookup = ref()
                     element = (
-                        <view className="w100p">
+                        <view className="w-full">
                             <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && lookup.value.showModal()} {...item.props} ></uv-input>
                             <base-lookup-code ref={lookup} lookupType={item.lookupType} systemCode={item.systemCode}
                                 onCallback={(value) => {
@@ -239,7 +239,7 @@ export default defineComponent({
                 case 'lov':
                     let dialog = ref()
                     element = (
-                        <view className="w100p">
+                        <view className="w-full">
                              <uv-input v-model={formData[item.value || item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
                             <base-dialog search-key={item.searchKey} ref={dialog} params={item.params || {}}
                                 api={item.api} keys={item.keys} columns={item.columns || []}
@@ -267,7 +267,7 @@ export default defineComponent({
                     break
                 case 'select':
                     let picker = ref()
-                    element = <view className="w100p">
+                    element = <view className="w-full">
                         <uv-input v-model={formData[item.key + 'Text' ]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && picker.value.open()} {...item.props} ></uv-input>
                         <uv-picker ref={picker} columns={[item.options]} keyName="label" cancelText="清除选择" onConfirm={
                             ({ value }) => {
@@ -290,7 +290,7 @@ export default defineComponent({
                     break;
                 case 'apiSelect':
                     let romoteSelect = ref()
-                    element = <view className="w100p">
+                    element = <view className="w-full">
                         <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && romoteSelect.value.showModal()} {...item.props} ></uv-input>
                         <base-api-select ref={romoteSelect}
                             keys={item.keys}
@@ -389,7 +389,7 @@ export default defineComponent({
 
         rules = Object.entries(rules).length === 0 ? null : rules
 
-        return () => <div className="w100p">
+        return () => <div className="w-full">
             <uv-form labelPosition="left" model={formData} rules={rules} errorType="border-bottom" {...props.formProps} ref={formRef}>
                 {...generate(props.legend)}
             </uv-form>
