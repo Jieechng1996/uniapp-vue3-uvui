@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2025-04-01 11:13:58
+ * @LastEditTime: 2025-04-01 11:20:30
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -134,7 +134,7 @@ const props = defineProps({
 		type: Array,
 		default: [],
 	},
-	type: {
+	checkType: {
 		type: String,
 		default: "radio",
 	},
@@ -161,7 +161,7 @@ const input = value => {
 };
 
 const click = index => {
-	if (props.type === "radio") {
+	if (props.checkType === "radio") {
 		currentList.value.forEach(item => (item.checked = false));
 	}
 	currentList.value[index].checked = true;
@@ -170,7 +170,7 @@ const click = index => {
 const emit = defineEmits(["confirm", "clear", "callback"]);
 
 const confirm = () => {
-	if (props.type === "radio") {
+	if (props.checkType === "radio") {
 		let item = currentList.value.find(item => item.checked) || {};
 		emit("confirm", item);
 		emit("callback", item);

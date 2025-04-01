@@ -16,7 +16,7 @@ import uvSwitch from '../uni_modules/uv-switch/components/uv-switch/uv-switch.vu
 import uvRadioGroup from '../uni_modules/uv-radio/components/uv-radio-group/uv-radio-group.vue'
 import uvRadio from '../uni_modules/uv-radio/components/uv-radio/uv-radio.vue'
 import dayjs from "dayjs"
-import { email, phoneNumber , tel } from '@/lib/regexp'
+import { email, phoneNumber, tel } from '@/lib/regexp'
 /*
  * @Date: 2023-07-21 09:25:31
  * @Author: guojiecheng
@@ -135,10 +135,10 @@ export default defineComponent({
                                     if (mode === 'year-month') {
                                         formData[item.key] = dayjs(value).format('YYYY-MM')
                                     }
-                                    if(mode === 'datetime'){
+                                    if (mode === 'datetime') {
                                         formData[item.key] = dayjs(value).format('YYYY-MM-DD HH:mm:ss')
                                     }
-                                    if(mode === 'year'){
+                                    if (mode === 'year') {
                                         formData[item.key] = dayjs(value).format('YYYY')
                                     }
                                     emit('update:modelValue', toRaw(formData))
@@ -199,7 +199,7 @@ export default defineComponent({
                                     formData[item.key + 'Text'] = ''
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.callbackFunc == 'function' && item.callbackFunc({})
-                                   
+
                                 }}
                                 {...item.regionsProps}></base-regions>
                         </view>
@@ -240,19 +240,24 @@ export default defineComponent({
                     let dialog = ref()
                     element = (
                         <view className="w-full">
-                             <uv-input v-model={formData[item.value || item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
+                            <uv-input v-model={formData[item.value || item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
                             <base-dialog search-key={item.searchKey} ref={dialog} params={item.params || {}}
-                                api={item.api} keys={item.keys} columns={item.columns || []}
+                                api={item.api} keys={item.keys} columns={item.columns || []} checkType={item.checkType || 'radio'}
                                 onConfirm={(value) => {
-                                    formData[item.value || item.key + 'Text'] = value[item.keys?.value]
-                                    formData[item.key] = value[item.keys?.key]
+                                    if (item.checkType === 'checkbox') {
+                                        formData[item.value || item.key + 'Text'] = value.map(item => item[item.keys?.value]).toString()
+                                        formData[item.key] = value.map(item => item[item.keys?.key]).toString()
+                                    }else{
+                                        formData[item.value || item.key + 'Text'] = value[item.keys?.value]
+                                        formData[item.key] = value[item.keys?.key]
+                                    }
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.confirmFunc == 'function' && item.confirmFunc(value)
                                     typeof item.callBackFunc == 'function' && item.callBackFunc(value)
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }}
                                 onClear={() => {
-                                    formData[item.value ||item.key + 'Text'] = ''
+                                    formData[item.value || item.key + 'Text'] = ''
                                     formData[item.key] = ''
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.clearFunc == 'function' && item.clearFunc({})
@@ -268,7 +273,7 @@ export default defineComponent({
                 case 'select':
                     let picker = ref()
                     element = <view className="w-full">
-                        <uv-input v-model={formData[item.key + 'Text' ]} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && picker.value.open()} {...item.props} ></uv-input>
+                        <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && picker.value.open()} {...item.props} ></uv-input>
                         <uv-picker ref={picker} columns={[item.options]} keyName="label" cancelText="清除选择" onConfirm={
                             ({ value }) => {
                                 formData[item.key] = value[0].value || value[0].key
@@ -320,14 +325,14 @@ export default defineComponent({
                     }} {...item.props}></uv-switch>
                     break;
                 case 'radio':
-                    element = <uv-radio-group v-model={formData[item.key]} {...item.props} {...item.radioGroupProps} disabled={item.disabled} onChange={() =>  emit('update:modelValue', toRaw(formData))}>
+                    element = <uv-radio-group v-model={formData[item.key]} {...item.props} {...item.radioGroupProps} disabled={item.disabled} onChange={() => emit('update:modelValue', toRaw(formData))}>
                         {item?.options.map((line, index) => {
                             return <uv-radio customStyle={{ marginRight: '16px' }} shape="square" label={line.value} name={line.key} {...item.radioProps}>{line.value}</uv-radio>
                         })}
                     </uv-radio-group>
                     break;
                 case 'textarea':
-                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} onChange={() =>  emit('update:modelValue', toRaw(formData))} />
+                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} onChange={() => emit('update:modelValue', toRaw(formData))} />
                     break
                 case 'phone':
                 case 'phoneNumber':
@@ -335,7 +340,7 @@ export default defineComponent({
                 case 'email':
                 case 'tel':
                 default:
-                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={() =>  emit('update:modelValue', toRaw(formData))} {...item.props} />
+                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={() => emit('update:modelValue', toRaw(formData))} {...item.props} />
                     break;
             }
 
@@ -344,7 +349,7 @@ export default defineComponent({
             </uv-form-item>
 
             return (
-                item.showFunc ? item.showFunc() && elementBox: elementBox
+                item.showFunc ? item.showFunc() && elementBox : elementBox
             )
 
         })
