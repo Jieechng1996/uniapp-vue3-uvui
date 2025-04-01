@@ -242,9 +242,9 @@ export default defineComponent({
                         <view className="w-full">
                             <uv-input v-model={formData[item.value || item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="search" disabled={item.disabled} onClick={() => !item.disabled && dialog.value.showModal()} {...item.props} ></uv-input>
                             <base-dialog search-key={item.searchKey} ref={dialog} params={item.params || {}}
-                                api={item.api} keys={item.keys} columns={item.columns || []} checkType={item.checkType || 'radio'}
+                                api={item.api} keys={item.keys} columns={item.columns || []} checkedType={item.checkedType || 'radio'}
                                 onConfirm={(value) => {
-                                    if (item.checkType === 'checkbox') {
+                                    if (item.checkedType === 'checkbox') {
                                         formData[item.value || item.key + 'Text'] = value.map(item => item[item.keys?.value]).toString()
                                         formData[item.key] = value.map(item => item[item.keys?.key]).toString()
                                     }else{
