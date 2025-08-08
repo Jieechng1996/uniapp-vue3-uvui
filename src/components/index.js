@@ -1,14 +1,14 @@
 /*
  * @Date: 2024-07-09 11:00:18
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-19 18:08:59
+ * @LastEditTime: 2025-04-03 13:45:10
  * @LastEditors: guojiecheng
  */
-// #ifdef MP-WEIXIN
+// #ifdef MP
 import baseForm from "./base-form-mp";
 // #endif
 
-// #ifndef MP-WEIXIN
+// #ifndef MP
 import baseForm from "./base-form";
 // #endif
 

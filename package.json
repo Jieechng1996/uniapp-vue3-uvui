@@ -9,6 +9,7 @@
     "dev:h5": "uni",
     "dev:h5:ssr": "uni --ssr",
     "dev:mp-weixin": "uni -p mp-weixin",
+    "dev:mp-alipay": "uni -p mp-alipay",
     "demo:h5": "uni --mode demo",
     "demo:mp-weixin": "uni -p mp-weixin --mode demo",
     "demo:app-android": "uni -p app-android --mode demo",

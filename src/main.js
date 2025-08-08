@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-04 17:19:20
+ * @LastEditTime: 2025-04-03 13:43:54
  * @LastEditors: guojiecheng
  */
 import {
@@ -17,11 +17,11 @@ import store from "./store";
 
 store.dispatch('INIT_BASE_INFO')
 
-// #ifdef MP-WEIXIN
+// #ifdef MP
 import baseForm from "@/components/base-form-mp";
 // #endif
 
-// #ifndef MP-WEIXIN
+// #ifndef MP
 import baseForm from "@/components/base-form.jsx";
 // #endif
 

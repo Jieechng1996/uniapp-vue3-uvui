@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-12-19 15:11:07
  * @Author: guojiecheng
- * @LastEditTime: 2024-12-19 16:58:50
+ * @LastEditTime: 2024-12-23 11:59:42
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -28,6 +28,9 @@ const webview = ref()
 
 onMounted(() => {
     console.log(webview.value.evalJS)
+    var currentWebview = plus.webview.currentWebview()
+    console.log(currentWebview)
+
 })
 
 onLoad((options) => {

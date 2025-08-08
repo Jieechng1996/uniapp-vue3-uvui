@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2025-04-01 11:24:52
+ * @LastEditTime: 2025-08-08 10:52:37
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -45,7 +45,7 @@
 						</view>
 					</view>
 				</view>
-				<view :style="{ height: showMore ? height : 'calc( 100% - 103px)' }">
+				<view :style="{ height: showMore ? height : height2 }">
 					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
 						<template #default="{ list: dataList }">
 							<uv-list>
@@ -154,7 +154,18 @@ const showMore = ref(false);
 
 const params = ref({});
 
-const height = computed(() => `calc(100% - 104px - 17px - ${props.searchList.length * 41}px)`);
+
+const systemInfo = uni.getSystemInfoSync();
+
+let isIOS = false;
+
+// #ifdef APP-PLUS || MP
+// isIOS =systemInfo.platform === "ios" || systemInfo.system.includes("iOS");
+// #endif
+
+const height = computed(() => `calc(100% - 104px - 17px - ${props.searchList.length * 41}px - ${isIOS ? "56" : "0"}px)`);
+
+const height2 = computed(() => `calc( 100% - 103px  - ${isIOS ? "56" : "0"}px)`);
 
 const input = value => {
 	params.value[props.searchKey.key] = value;
