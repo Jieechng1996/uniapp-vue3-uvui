@@ -252,6 +252,31 @@ export const getlookupMeaning = async (lookupType, lookupCode , systemCode = 'BA
   return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
 };
 
+export const getLookupMeaning = async (lookupType, lookupCode) => {
+		let lookupCodes = toRaw(store.state.lookupCodeList) || [];
+		let lookupCodeList = lookupCodes.filter(item => item.lookupType === lookupType && item.systemCode === 'BASE');
+		if (lookupCodeList.length === 0) {
+			let { data } = await fetch.baseLookupValuesService_find({
+				lookupType: lookupType,
+				systemCode: 'BASE',
+				pageIndex: 1,
+				pageRows: 1000,
+			});
+			lookupCodeList = data;
+			lookupCodes = [...lookupCodes, ...data];
+			store.commit("SET_LOOKUP_CODE_LIST", lookupCodes);
+			// wx.setStorageSync('lookupCodeList', lookupCode)
+		}
+		lookupCodeList.map(item => {
+			item.name = item.meaning;
+			item.value = item.lookupCode;
+			item.text = item.meaning;
+			return item;
+		});
+
+		return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
+	};
+
 export default {
   updateMiniProgram
 }

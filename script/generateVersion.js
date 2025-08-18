@@ -1,13 +1,21 @@
 /*
  * @Date: 2024-09-24 13:04:03
  * @Author: guojiecheng
- * @LastEditTime: 2024-09-24 21:59:25
+ * @LastEditTime: 2024-12-17 16:46:01
  * @LastEditors: guojiecheng
  */
 const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+
+dayjs.extend(utc); // 使用 UTC 插件
+dayjs.extend(timezone); // 使用时区插件
+
 const fs = require('fs');
-const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+const date = dayjs().tz('Asia/Shanghai');
+const timestamp = date.format('YYYYMMDD_HHmmss');
 const version = `v${timestamp}`;
+const path = require('path');
 // const dotenv = require('dotenv');
 
 // dotenv.config();
@@ -26,3 +34,13 @@ envContent = envContent.replace(/VITE_APP_VERSION=.*/g, '');
 
 // 重新写入 .env 文件，确保没有换行
 fs.writeFileSync('.env', envContent.trim() + `\nVITE_APP_VERSION=${version}`);
+
+let directory = 'src/static'
+
+const filePath = path.join(directory, 'version.json');
+
+fs.mkdirSync(directory, { recursive: true });
+
+fs.writeFileSync(filePath, JSON.stringify({
+    ver: version
+}, null, 2), 'utf8');

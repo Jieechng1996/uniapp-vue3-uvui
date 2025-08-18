@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-08-15 14:57:02
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-15 15:15:34
+ * @LastEditTime: 2024-12-26 23:25:03
  * @LastEditors: guojiecheng
  */
 const { execSync } = require('child_process');
@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 配置
-const repoUrl = 'git@github.com:Jieechng1996/uniapp-vue3-uvui.git'; // 远程仓库 URL
+const repoUrl = 'https://github.com/Jieechng1996/uniapp-vue3-uvui.git'; // 远程仓库 URL
 
 const tempDir = path.join(__dirname, 'temp-repo'); // 临时目录
 

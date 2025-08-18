@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-17 11:37:43
  * @Author: guojiecheng
- * @LastEditTime: 2025-02-19 17:55:37
+ * @LastEditTime: 2025-08-08 15:32:41
  * @LastEditors: guojiecheng
  */
 import { toRaw } from 'vue';
@@ -26,19 +26,19 @@ export default createStore({
         },
         SET_USER_INFO(state, data) {
             state.userInfo = data
-            uni.setStorageSync('userInfo', data);
+            uni.setStorageSync(`${import.meta.env.VITE_PF}_userInfo`, data);
         },
         REMOVE_USER_INFO(state) {
             state.userInfo = {}
-            uni.removeStorageSync('userInfo')
+            uni.removeStorageSync(`${import.meta.env.VITE_PF}_userInfo`)
         },
         SET_LOGIN_INFO(state, data) {
             state.loginInfo = data
-            uni.setStorageSync('loginInfo', data);
+            uni.setStorageSync(`${import.meta.env.VITE_PF}_loginInfo`, data);
         },
         REMOVE_LOGIN_INFO(state) {
             state.loginInfo = {}
-            uni.removeStorageSync('loginInfo')
+            uni.removeStorageSync(`${import.meta.env.VITE_PF}_loginInfo`)
         },
         SET_LOOKUP_CODE_LIST(state, data) {
             state.lookupCodeList = data
