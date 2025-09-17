@@ -33,6 +33,7 @@ export const baseRequest = ({
     url,
     contentType = 'application/json',
     timeout = 30000,
+    hearder = {}
 }) => {
     return new Promise((resolve, reject) => {
         uni.showLoading({
@@ -46,7 +47,8 @@ export const baseRequest = ({
             header: {
                 'content-type': contentType,
                 certificate: store.state?.userInfo?.certificate || 'nothing',
-                "pf": import.meta.env.VITE_PF
+                "pf": import.meta.env.VITE_PF,
+                ...hearder,
             },
             method: method,
             timeout: timeout,
@@ -117,6 +119,7 @@ export const baseRequest = ({
 export const simpleRequest = ({
     params,
     url,
+    header = {}
 }) => {
     return new Promise((resolve, reject) => {
         uni.request({
@@ -125,7 +128,8 @@ export const simpleRequest = ({
             header: {
                 'content-type': 'application/json',
                 certificate: store.state?.userInfo?.certificate || 'nothing',
-                "pf": import.meta.env.VITE_PF
+                "pf": import.meta.env.VITE_PF,
+                ...header
             },
             method: 'post',
             success: (res) => {
@@ -148,6 +152,7 @@ export const simpleRequest = ({
 export const bufferRequest = ({
     params,
     url,
+    header = {}
 }) => {
     return new Promise((resolve, reject) => {
         uni.showLoading({
@@ -160,7 +165,8 @@ export const bufferRequest = ({
             header: {
                 'content-type': 'application/json;charset=UTF-8',
                 certificate: store.state?.userInfo?.certificate || 'nothing',
-                pf: 'ECMOBuni_APPLET_DRIVER'
+                pf: 'ECMOBuni_APPLET_DRIVER',
+                ...header
             },
             method: 'POST',
             responseType: 'arraybuffer',
@@ -201,7 +207,7 @@ export const bufferRequest = ({
 
 }
 
-export const uploadData = (url, filePath) => new Promise((resolve, reject) => {
+export const uploadData = (url, filePath , formData = {}, header = {}) => new Promise((resolve, reject) => {
     console.log(filePath)
     uni.showLoading({ title: '上传中', mask: true, })
     uni.uploadFile({
@@ -211,8 +217,10 @@ export const uploadData = (url, filePath) => new Promise((resolve, reject) => {
         header: {
             //Token: store.state.token,
             certificate: store.state.userInfo.certificate,
-            pf: 'ECMOBMALL'
+            pf: import.meta.env.VITE_PF,
+            ...header
         },
+        formData,
         success: (res) => {
             uni.hideLoading()
             let result = JSON.parse(res.data)
