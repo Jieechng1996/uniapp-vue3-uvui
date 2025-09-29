@@ -332,7 +332,10 @@ export default defineComponent({
                     </uv-radio-group>
                     break;
                 case 'textarea':
-                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} onChange={() => emit('update:modelValue', toRaw(formData))} />
+                    element = <uv-textarea v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" {...item.props} onChange={(event) => {
+                        emit('update:modelValue', toRaw(formData))
+                        typeof item.change == 'function' && item.change(event)
+                    }} />
                     break
                 case 'phone':
                 case 'phoneNumber':
@@ -340,7 +343,10 @@ export default defineComponent({
                 case 'email':
                 case 'tel':
                 default:
-                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={() => emit('update:modelValue', toRaw(formData))} {...item.props} />
+                    element = <uv-input v-model={formData[item.key]} placeholder={item.placeholder || '请输入'} clearable disabled={item.disabled} border="surround" onChange={(event) => {
+                        emit('update:modelValue', toRaw(formData))
+                        typeof item.change == 'function' && item.change(event)
+                    }} {...item.props} />
                     break;
             }
 
