@@ -163,35 +163,40 @@ export const getSelecterContent = (selector = '#id', component = null) => {
 
 
 export const downloadUrl = (url) => {
-  uni.downloadFile({
-    url,
-    success: (res) => {
-      // #ifndef H5
-      const filePath = res.tempFilePath;
-      uni.openDocument({
-        filePath: filePath,
-        showMenu: true,
-        success: (res) => {
-          toast("下载成功");
-        },
-        fail: (err) => {
-          warning(err.errMsg);
-        },
-      });
-      // #endif
-      // #ifdef H5
-      toast("操作成功");
-      // #endif
-    },
-    fail: (err) => {
-      warning(err.errMsg);
-    }
-  });
+  // #ifdef H5
+  window.open(url)
+  // #endif
+  // #ifndef H5
+  if (/\.(jpg|jpeg|png|gif|bmp|webp|svg|ico)$/i.test(url)) {
+    uni.saveImageToPhotosAlbum({
+      filePath: filePath,
+      success: (result) => {
+        toast("下载成功");
+      },
+      fail: (error) => {
+        console.log(error);
+        warning(error.errMsg);
+      }
+    })
+  } else {
+    uni.openDocument({
+      filePath: filePath,
+      showMenu: true,
+      success: (res) => {
+        toast("下载成功");
+      },
+      fail: (err) => {
+        warning(err.errMsg);
+      },
+    });
+  }
+  // #endif
+
 }
 
 export const checkLocationSetting = () => {
 
-  return new Promise(( resolve , reject ) => {
+  return new Promise((resolve, reject) => {
     uni.getSetting({
       success(res) {
         if (!res.authSetting["scope.userLocation"]) {
@@ -219,22 +224,22 @@ export const checkLocationSetting = () => {
             },
           });
           reject()
-        }else{
+        } else {
           resolve()
         }
       },
-      fail(err){
+      fail(err) {
         message.warning(err.errMsg)
         reject(err)
       }
     });
   })
-  
+
 }
 
-export const getInstanceOption = () =>  getCurrentPages()?.[getCurrentPages()?.length - 1]?.options; // 获取当前页面实例
+export const getInstanceOption = () => getCurrentPages()?.[getCurrentPages()?.length - 1]?.options; // 获取当前页面实例
 
-export const getlookupMeaning = async (lookupType, lookupCode , systemCode = 'BASE') => {
+export const getlookupMeaning = async (lookupType, lookupCode, systemCode = 'BASE') => {
   let lookupCodes = toRaw(store.state.lookupCodeList) || [];
   let lookupCodeList = lookupCodes.filter(item => item.lookupType === lookupType && item.systemCode === systemCode);
   if (lookupCodeList.length === 0) {
@@ -253,29 +258,29 @@ export const getlookupMeaning = async (lookupType, lookupCode , systemCode = 'BA
 };
 
 export const getLookupMeaning = async (lookupType, lookupCode) => {
-		let lookupCodes = toRaw(store.state.lookupCodeList) || [];
-		let lookupCodeList = lookupCodes.filter(item => item.lookupType === lookupType && item.systemCode === 'BASE');
-		if (lookupCodeList.length === 0) {
-			let { data } = await fetch.baseLookupValuesService_find({
-				lookupType: lookupType,
-				systemCode: 'BASE',
-				pageIndex: 1,
-				pageRows: 1000,
-			});
-			lookupCodeList = data;
-			lookupCodes = [...lookupCodes, ...data];
-			store.commit("SET_LOOKUP_CODE_LIST", lookupCodes);
-			// wx.setStorageSync('lookupCodeList', lookupCode)
-		}
-		lookupCodeList.map(item => {
-			item.name = item.meaning;
-			item.value = item.lookupCode;
-			item.text = item.meaning;
-			return item;
-		});
+  let lookupCodes = toRaw(store.state.lookupCodeList) || [];
+  let lookupCodeList = lookupCodes.filter(item => item.lookupType === lookupType && item.systemCode === 'BASE');
+  if (lookupCodeList.length === 0) {
+    let { data } = await fetch.baseLookupValuesService_find({
+      lookupType: lookupType,
+      systemCode: 'BASE',
+      pageIndex: 1,
+      pageRows: 1000,
+    });
+    lookupCodeList = data;
+    lookupCodes = [...lookupCodes, ...data];
+    store.commit("SET_LOOKUP_CODE_LIST", lookupCodes);
+    // wx.setStorageSync('lookupCodeList', lookupCode)
+  }
+  lookupCodeList.map(item => {
+    item.name = item.meaning;
+    item.value = item.lookupCode;
+    item.text = item.meaning;
+    return item;
+  });
 
-		return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
-	};
+  return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
+};
 
 export default {
   updateMiniProgram

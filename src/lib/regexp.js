@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-08-02 15:14:41
  * @Author: guojiecheng
- * @LastEditTime: 2024-11-23 11:05:53
+ * @LastEditTime: 2025-10-20 15:54:08
  * @LastEditors: guojiecheng
  */
 export const phoneNumber = /^(1)\d{10}$/
@@ -19,6 +19,8 @@ export const cash = /^(0|[1-9]\d*)(\.\d{1,2})?$/
 export const chinese = /^[\u4e00-\u9fa5]{0,}$/
 
 export const tel = /^1\d{10}$|^(0\d{2,3}-?|\(0\d{2,3}\))?[1-9]\d{4,7}(-\d{1,8})?$/
+
+export const image = /\.(jpg|jpeg|png|gif|bmp|webp|svg|tiff|ico)(\?.*)?$/i;
 
 export const validateIdCardNum = (value) => {
     // 非法字符串
