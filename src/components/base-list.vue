@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2025-11-10 11:16:49
+ * @LastEditTime: 2025-11-10 11:38:22
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -29,16 +29,17 @@
 				}
 			">
 			<slot name="default" :list="list"></slot>
-			<view v-if="list.length !== 0 && list.length === count">
+			<view v-if="props.autoScroll &&list.length !== 0 && list.length === count">
 				<uv-divider text="我也是有底线的"></uv-divider>
 			</view>
-			<view v-else>
+			
+			<view v-if="list.length === 0" class="py-20">
+				<uv-empty mode="list"></uv-empty>
+			</view>
+            <view v-else>
 				<view v-if="!props.autoScroll">
 					<uni-load-more :status="status" @clickLoadMore="getNextList()" :contentText="contentText"></uni-load-more>
 				</view>
-			</view>
-			<view v-if="list.length === 0" class="py-20">
-				<uv-empty mode="list"></uv-empty>
 			</view>
 		</scroll-view>
 	</view>
