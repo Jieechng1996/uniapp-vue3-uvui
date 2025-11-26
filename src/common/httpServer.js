@@ -27,6 +27,8 @@ let httpServer = {
     postV1: (url, params) => baseRequest({ params, url })
 }
 
+export const post = (url, params) => baseRequest({ url, params })
+
 export const baseRequest = ({
     params,
     method = 'post',

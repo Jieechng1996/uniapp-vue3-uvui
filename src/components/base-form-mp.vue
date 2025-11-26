@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2025-11-10 11:16:05
+ * @LastEditTime: 2025-11-18 16:51:46
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -68,13 +68,13 @@
 						<view @click="() => !(item.disabled || props.disabled) && proxy.$refs['dialog' + index][0].showModal()">
 							<uv-input v-model="formData[item.value || item.key + 'Text']" :placeholder="item.placeholder || '请选择'" clearable readonly border="surround" suffixIcon="search" :disabled="item.disabled" v-bind="{ ...item.props }"></uv-input>
 						</view>
-
 						<base-dialog
 							:search-key="item.searchKey"
 							:ref="'dialog' + index"
 							:params="item.params || {}"
 							:api="item.api"
 							:keys="item.keys"
+							:columns="item.columns || []"
 							@confirm="
 								value => {
 									formData[item.value || item.key + 'Text'] = value[item.keys?.value];
