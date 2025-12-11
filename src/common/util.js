@@ -257,13 +257,13 @@ export const getlookupMeaning = async (lookupType, lookupCode, systemCode = 'BAS
   return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
 };
 
-export const getLookupMeaning = async (lookupType, lookupCode) => {
+export const getLookupCodeList = async (lookupType, systemCode = 'BASE') => {
   let lookupCodes = toRaw(store.state.lookupCodeList) || [];
   let lookupCodeList = lookupCodes.filter(item => item.lookupType === lookupType && item.systemCode === 'BASE');
   if (lookupCodeList.length === 0) {
     let { data } = await fetch.baseLookupValuesService_find({
       lookupType: lookupType,
-      systemCode: 'BASE',
+      systemCode,
       pageIndex: 1,
       pageRows: 1000,
     });
@@ -278,8 +278,6 @@ export const getLookupMeaning = async (lookupType, lookupCode) => {
     item.text = item.meaning;
     return item;
   });
-
-  return lookupCodeList.find(item => item.lookupCode === lookupCode)?.meaning
 };
 
 export default {
