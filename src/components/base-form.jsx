@@ -220,11 +220,11 @@ export default defineComponent({
                     let lookup = ref()
                     element = (
                         <view className="w-full">
-                            <uv-input v-model={formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && lookup.value.showModal()} {...item.props} ></uv-input>
+                            <uv-input v-model={item.value || formData[item.key + 'Text']} placeholder={item.placeholder || '请选择'} clearable readonly border="surround" suffixIcon="arrow-down" disabled={item.disabled} onClick={() => !item.disabled && lookup.value.showModal()} {...item.props} ></uv-input>
                             <base-lookup-code ref={lookup} lookupType={item.lookupType} systemCode={item.systemCode}
                                 onCallback={(value) => {
                                     formData[item.key] = value.lookupCode
-                                    formData[item.key + 'Text'] = value.meaning
+                                    formData[item.value || item.key + 'Text'] = value.meaning
                                     emit('update:modelValue', toRaw(formData))
                                     typeof item.callbackFunc == 'function' && item.callbackFunc(value)
                                 }} onOnLoad={(list) => {

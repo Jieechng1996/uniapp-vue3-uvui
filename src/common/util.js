@@ -272,7 +272,7 @@ export const getLookupCodeList = async (lookupType, systemCode = 'BASE') => {
     store.commit("SET_LOOKUP_CODE_LIST", lookupCodes);
     // wx.setStorageSync('lookupCodeList', lookupCode)
   }
-  lookupCodeList.map(item => {
+  return lookupCodeList.map(item => {
     item.name = item.meaning;
     item.value = item.lookupCode;
     item.text = item.meaning;

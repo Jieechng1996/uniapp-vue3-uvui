@@ -1,18 +1,18 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2025-11-10 11:38:22
+ * @LastEditTime: 2025-12-25 11:32:25
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
     2、如果说遇到需要修改返回数据的值得话，请调用onLoad函数并配合v-model食用
 -->
 <template>
-	<view class="h100p">
+	<view class="h-full">
 		<scroll-view
 			scroll-y
 			scroll-with-animation
-			class="h100p"
+			class="h-full"
 			:refresher-enabled="props.autoScroll"
 			@refresherrefresh="() => {
 					if (props.autoScroll) {
