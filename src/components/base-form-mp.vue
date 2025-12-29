@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2025-11-18 16:51:46
+ * @LastEditTime: 2025-12-29 17:00:58
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -75,10 +75,16 @@
 							:api="item.api"
 							:keys="item.keys"
 							:columns="item.columns || []"
+							:checkedType="item.checkedType || 'radio'"
 							@confirm="
 								value => {
-									formData[item.value || item.key + 'Text'] = value[item.keys?.value];
-									formData[item.key] = value[item.keys?.key];
+									if (item.checkedType === 'checkbox') {
+                                        formData[item.value || item.key + 'Text'] = value.map(line => line[item.keys?.value]).toString()
+                                        formData[item.key] = value.map(line => line[item.keys?.key]).toString()
+                                    }else{
+                                        formData[item.value || item.key + 'Text'] = value[item.keys?.value]
+                                        formData[item.key] = value[item.keys?.key]
+                                    }
 									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
 									typeof item.callBackFunc == 'function' && item.callBackFunc(value);

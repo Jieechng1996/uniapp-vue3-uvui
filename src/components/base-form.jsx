@@ -245,8 +245,8 @@ export default defineComponent({
                                 api={item.api} keys={item.keys} columns={item.columns || []} checkedType={item.checkedType || 'radio'}
                                 onConfirm={(value) => {
                                     if (item.checkedType === 'checkbox') {
-                                        formData[item.value || item.key + 'Text'] = value.map(item => item[item.keys?.value]).toString()
-                                        formData[item.key] = value.map(item => item[item.keys?.key]).toString()
+                                        formData[item.value || item.key + 'Text'] = value.map(line => line[item.keys?.value]).toString()
+                                        formData[item.key] = value.map(line => line[item.keys?.key]).toString()
                                     }else{
                                         formData[item.value || item.key + 'Text'] = value[item.keys?.value]
                                         formData[item.key] = value[item.keys?.key]
