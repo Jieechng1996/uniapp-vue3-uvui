@@ -1,12 +1,12 @@
 <!--
  * @Date: 2024-07-12 17:24:05
  * @Author: guojiecheng
- * @LastEditTime: 2026-01-29 10:26:31
+ * @LastEditTime: 2026-01-29 10:51:28
  * @LastEditors: guojiecheng
 -->
 <template>
     <uv-upload :fileList="list" :maxCount="props.limit" :disabled="props.disabled" :deletable="!props.disabled"
-        @afterRead="choose" @delete="delFile" v-bind="props.props"></uv-upload>
+        @afterRead="choose" @delete="delFile" accept="file" v-bind="props.props"></uv-upload>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
@@ -18,6 +18,18 @@ import { toRaw } from 'vue'
 
 
 const props = defineProps({
+    businessKey: {
+        type: String,
+        default: ''
+    },
+    businessId: {
+        type: String,
+        default: ''
+    },
+    bucketName: {
+        type: String,
+        default: ''
+    },
     limit: {
         type: Number,
         default: 9
@@ -76,7 +88,7 @@ watch(() => props.modelValue, (value) => {
 
 const choose = async (res) => {
     // let { tempFilePaths } = await chooseImage()
-    let { data } = await uploadData(api.fileUploadService_pictureUpload, res.file.url)
+    let { data } = await uploadData(api.fileUploadService_cosfile_documentUpload, res.file.url, { businessId: props.businessId, businessKey: props.businessKey, bucketName: props.bucketName })
     data.name = data.filesName
     data.extname = data.filesName.split('.')[1]
     data.url = data.filesPath

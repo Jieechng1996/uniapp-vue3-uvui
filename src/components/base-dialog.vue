@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2025-08-08 10:52:37
+ * @LastEditTime: 2026-01-29 19:18:07
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -46,7 +46,7 @@
 					</view>
 				</view>
 				<view :style="{ height: showMore ? height : height2 }">
-					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" v-model="currentList" :auto-request="false">
+					<base-list :url="props.api" :params="params" ref="list" :pageRows="20" :auto-request="false" @onLoad="onLoad">
 						<template #default="{ list: dataList }">
 							<uv-list>
 								<uv-list-item v-for="(item, index) in currentList" :key="index" :show-arrow="false" clickable @click="() => click(index)">
@@ -138,6 +138,10 @@ const props = defineProps({
 		type: String,
 		default: "radio",
 	},
+	modelValue: {
+		type: String,
+		default: "",
+	},
 });
 
 const popup = ref();
@@ -178,19 +182,21 @@ const click = index => {
 	currentList.value[index].checked = true;
 };
 
-const emit = defineEmits(["confirm", "clear", "callback"]);
+const emit = defineEmits(["confirm", "clear", "callback", '"update:modelValue"']);
 
 const confirm = () => {
 	if (props.checkedType === "radio") {
 		let item = currentList.value.find(item => item.checked) || {};
 		emit("confirm", item);
 		emit("callback", item);
+		emit('update:modelValue', item[props.keys.key]);
 	} else {
 		let items = currentList.value.filter(item => item.checked) || [];
 		emit("confirm", items);
 		emit("callback", items);
+		emit('update:modelValue', items.map(item => item[props.keys.key]).join(","));
 	}
-
+	
 	hideModal();
 };
 
@@ -230,6 +236,28 @@ const showModal = () => {
 // })
 
 const hideModal = () => popup.value.close();
+
+const onLoad = (list) => {
+	console.log(props.keys.key)
+	console.log(currentList.value)
+	list.forEach(item => {
+		if (props.checkedType === "radio") {
+			if (item[props.keys.key] === props.modelValue) {
+				item.checked = true;
+			} else {
+				item.checked = false;
+			}
+		} else {
+			let values = props.modelValue ? props.modelValue.split(",") : [];
+			if (values.includes(item[props.keys.key])) {
+				item.checked = true;
+			} else {
+				item.checked = false;
+			}
+		}
+	});
+	currentList.value = list;
+}
 
 defineExpose({
 	showModal,
