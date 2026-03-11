@@ -1,11 +1,12 @@
 <!--
  * @Date: 2023-09-14 10:35:26
  * @Author: guojiecheng
- * @LastEditTime: 2024-12-16 15:12:16
+ * @LastEditTime: 2026-03-11 09:02:03
  * @LastEditors: guojiecheng
 -->
 <template>
-	<uv-picker ref="popup" :columns="actions" keyName="name" @confirm="confirm" cancelText="清除选择" @cancel="cancel"></uv-picker>
+	<uv-picker ref="popup" :columns="actions" keyName="name" @confirm="confirm" cancelText="清除选择"
+		@cancel="cancel"></uv-picker>
 	<!-- <uv-popup ref="popup" background-color="#fff" type="bottom" v-bind="props.props">
         <view class="header">
             <view @click="cancel">清除选择</view>
@@ -36,6 +37,10 @@ const props = defineProps({
 		default: "",
 	},
 	systemCode: {
+		type: String,
+		default: "",
+	},
+	parentLookupCode: {
 		type: String,
 		default: "",
 	},
@@ -79,6 +84,9 @@ const getLookupCode = async () => {
 		store.commit("SET_LOOKUP_CODE_LIST", lookupCodes);
 		// wx.setStorageSync('lookupCodeList', lookupCode)
 	}
+	if (props.parentLookupCode) {
+		lookupCodeList = lookupCodeList.filter(item => item.parentLookupCode == props.parentLookupCode);
+	}
 	lookupCodeList.map(item => {
 		item.name = item.meaning;
 		item.value = item.lookupCode;
@@ -87,7 +95,7 @@ const getLookupCode = async () => {
 	});
 	actions.value = [lookupCodeList];
 	console.log(actions.value);
-	lookupCode.value = lookupCodeList[0].lookupCode;
+	lookupCode.value = lookupCodeList[0]?.lookupCode;
 	emit("onLoad", lookupCodeList);
 };
 const confirm = ({ value }) => {
@@ -116,7 +124,7 @@ const showModal = () => {
 
 const hideModal = () => popup.value.close();
 
-onMounted(() => {});
+onMounted(() => { });
 
 defineExpose({
 	showModal,

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-08-02 09:52:55
  * @Author: guojiecheng
- * @LastEditTime: 2024-08-19 18:18:27
+ * @LastEditTime: 2026-03-11 08:59:21
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -35,8 +35,7 @@
 </template>
 <script setup>
 
-import { baseForm } from '@/components'
-
+import  baseForm  from './base-form-mp.vue'
 import fetch from '@/config/fetch'
 import { computed, onMounted, ref } from 'vue'
 import { toast , alert ,error} from '@/common/message'

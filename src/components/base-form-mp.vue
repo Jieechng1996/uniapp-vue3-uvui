@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2026-01-29 19:17:22
+ * @LastEditTime: 2026-03-11 09:00:29
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -83,12 +83,14 @@
 							:api="item.api" :keys="item.keys" :columns="item.columns || []"
 							:checkedType="item.checkedType || 'radio'" v-model="formData[item.key]" @confirm="
 								value => {
-									if (item.checkedType === 'checkbox') {
-										formData[item.value || item.key + 'Text'] = value.map(line => line[item.keys?.value]).toString()
-										formData[item.key] = value.map(line => line[item.keys?.key]).toString()
-									} else {
-										formData[item.value || item.key + 'Text'] = value[item.keys?.value]
-										formData[item.key] = value[item.keys?.key]
+									if (item.keys?.key) {
+										if (item.checkedType === 'checkbox') {
+											formData[item.value || item.key + 'Text'] = value.map(line => line[item.keys?.value]).toString()
+											formData[item.key] = value.map(line => line[item.keys?.key]).toString()
+										} else {
+											formData[item.value || item.key + 'Text'] = value[item.keys?.value]
+											formData[item.key] = value[item.keys?.key]
+										}
 									}
 									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
@@ -105,7 +107,7 @@
 							" v-bind="{ ...item.dialogProps }"></base-dialog>
 					</view>
 					<view v-else-if="item.type == 'uploader'">
-						<base-uploader v-model="formData[item.key + 's']" :limit="1" :disabled="item.disabled"
+						<base-uploader :modelValue="formData[item.key + 's']" :limit="1" :disabled="item.disabled"
 							@callback="
 								file => {
 									formData[item.key] = file.filesPath;
@@ -116,7 +118,7 @@
 						</base-uploader>
 					</view>
 					<view v-else-if="item.type == 'documentUploader'">
-						<base-file-uploader v-model="formData[item.key + 's']" :limit="1" :disabled="item.disabled"
+						<base-file-uploader :modelValue="formData[item.key + 's']" :limit="1" :disabled="item.disabled"
 							:businessId="item.businessId" :businessKey="item.businessKey" :bucketName="item.bucketName"
 							@callback="
 								file => {
@@ -146,7 +148,8 @@
 								border="surround" suffixIcon="arrow-down"></uv-input>
 						</view>
 						<base-lookup-code :ref="'lookup' + index" :lookupType="item.lookupType"
-							:systemCode="item.systemCode" @callback="
+							:systemCode="item.systemCode || 'BASE'" :parentLookupCode="item.parentLookupCode || ''"
+							@callback="
 								value => {
 									formData[item.key] = value.lookupCode;
 									formData[item.value || item.key + 'Text'] = value.meaning;
@@ -200,7 +203,7 @@
 							:disabled="item.disabled" @change="() => emit('update:modelValue', toRaw(formData))">
 							<uv-radio v-for="(line, index) in item?.options" :key="index"
 								:customStyle="{ marginRight: '16px', marginBottom: '8px' }" shape="square"
-								:label="line.value" :name="line.key" v-bind="item.radioProps">{{ line.value
+								:label="line.value" :name="line.key" v-bind="item.radioProps">{{ line.value || line.label
 								}}</uv-radio>
 						</uv-radio-group>
 					</view>
@@ -293,10 +296,13 @@ watch(
 			for (let i in toRaw(value)) {
 				formData[i] = toRaw(value)[i];
 			}
+
 		}
 	},
 	{ deep: true, immediate: true }
 );
+
+
 
 watch(
 	() => formData,
@@ -335,12 +341,19 @@ props.legend.forEach(item => {
 		formData[item.key] = formData[item.key] || item.falseValue;
 		formData[item.key + "Flag"] = formData[item.key] === item.trueValue;
 	}
-	if (item.type === "uploader") {
-		formData[item.key + "s"] = formData[item.key] ? [{ filesPath: formData[item.key] }] : [];
+	if (item.type === "uploader" || item.type === "documentUploader") {
+		formData[item.key] = formData[item.key] || "";
+		formData[item.key + "s"] = formData[item.key + "s"] || [];
 	}
-	if (item.type === "documentUploader") {
-		formData[item.key + "s"] = formData[item.key] ? [{ filesPath: formData[item.key] }] : [];
+	if (item.type === "uploader" || item.type === "documentUploader") {
+		watch(
+			() => formData[item.key],
+			(newValue) => {
+				formData[item.key + "s"] = newValue ? [{ filesPath: newValue }] : [];
+			}
+		);
 	}
+
 	if (item.type === "email") {
 		rules[item.key] = [
 			...rules[item.key],
