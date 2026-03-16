@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2026-03-11 09:00:29
+ * @LastEditTime: 2026-03-16 10:25:55
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -38,10 +38,13 @@
 
 									emit('update:modelValue', toRaw(formData));
 									typeof item.callbackFunc == 'function' && item.callbackFunc(value);
+									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
 								}
 							" cancelText="清除选择" @cancel="
 								() => {
 									formData[item.key] = '';
+									typeof item.callbackFunc == 'function' && item.callbackFunc('');
+									typeof item.callBackFunc == 'function' && item.callBackFunc('');
 									emit('update:modelValue', toRaw(formData));
 								}
 							" v-bind="item.timeProps"></uv-datetime-picker>
@@ -95,6 +98,7 @@
 									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
 									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
+									typeof item.callbackFunc == 'function' && item.callbackFunc(value);
 								}
 							" @clear="
 								() => {
@@ -103,6 +107,7 @@
 									emit('update:modelValue', toRaw(formData));
 									typeof item.clearFunc == 'function' && item.clearFunc({});
 									typeof item.callBackFunc == 'function' && item.callBackFunc({});
+									typeof item.callbackFunc == 'function' && item.callbackFunc(value);
 								}
 							" v-bind="{ ...item.dialogProps }"></base-dialog>
 					</view>
@@ -172,11 +177,12 @@
 						<uv-picker :ref="'select' + index" :columns="[item.options]" keyName="label" cancelText="清除选择"
 							@confirm="
 								({ value }) => {
-									formData[item.key] = value[0].key;
+									formData[item.key] = value[0].key || value[0].value;
 									formData[item.key + 'Text'] = value[0].label;
 									emit('update:modelValue', toRaw(formData));
-									typeof item.confirmFunc == 'function' && item.confirmFunc(value[0]);
-									typeof item.callbackFunc == 'function' && item.callbackFunc(value[0]);
+									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
+									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
+									typeof item.callbackFunc == 'function' && item.callbackFunc(value);
 								}
 							" @cancel="
 								() => {
@@ -184,6 +190,7 @@
 									formData[item.key + 'Text'] = '';
 									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc({});
+									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
 									typeof item.callbackFunc == 'function' && item.callbackFunc({});
 								}
 							"></uv-picker>
