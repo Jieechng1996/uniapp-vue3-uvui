@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-07-05 17:49:24
  * @Author: guojiecheng
- * @LastEditTime: 2025-12-25 11:32:25
+ * @LastEditTime: 2026-03-24 11:21:02
  * @LastEditors: guojiecheng
  * @Description:
     1、常规使用的话可以直接使用作用域插槽内的变量
@@ -16,7 +16,7 @@
 			:refresher-enabled="props.autoScroll"
 			@refresherrefresh="() => {
 					if (props.autoScroll) {
-						refreshList();
+						refreshList(true);
 					}
 				}
 			"

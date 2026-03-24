@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2026-03-16 10:25:55
+ * @LastEditTime: 2026-03-21 15:40:50
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -57,7 +57,7 @@
 					</view>
 					<view v-else-if="item.type === 'dateRange' || item.type === 'range'">
 						<view
-							@click="() => !(item.disabled || props.disabled) && proxy.$refs['range' + index][0].open()">
+							@click="() => !(item.disabled || props.disabled) && proxy.$refs['range' + index][0].open()" class="w-full">
 							<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请选择'" clearable
 								readonly border="surround" suffixIcon="arrow-down" :disabled="item.disabled"
 								v-bind="{ ...item.props }"></uv-input>
@@ -228,6 +228,15 @@
 					</view>
 					<view v-else-if="item.type === 'text'" class="w-full">
 						{{ formData[item.key] }}
+					</view>
+					<view v-else-if="item.type === 'textarea'" class="w-full">
+						<uv-textarea v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable
+							:disabled="item.disabled" border="surround" v-bind="{ ...item.props }" @change="
+								value => {
+									emit('update:modelValue', toRaw(formData));
+									typeof item.change === 'function' && item.change(value);
+								}
+							" />
 					</view>
 					<view v-else class="w-full">
 						<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请输入'" clearable
