@@ -2,6 +2,7 @@
 <template>
   <view class="filter-popup">
     <uv-popup
+      :customStyle="{ paddingTop: '0px'}"
       ref="popupRef"
       background-color="#fff"
       mode="right"
@@ -106,8 +107,8 @@ const scrollViewHeight = computed(() => {
  * 关闭弹窗
  */
 const handleClose = () => {
-  emit('update:show', false)
   emit('close')
+  close()
 }
 
 /**
@@ -117,6 +118,7 @@ const handleReset = () => {
   formData.value = { ...props.defaultValues }
   emit('update:modelValue', formData.value)
   emit('reset')
+  close()
 }
 
 /**
@@ -124,8 +126,8 @@ const handleReset = () => {
  */
 const handleSearch = () => {
   emit('update:modelValue', formData.value)
-  emit('update:show', false)
   emit('search', formData.value)
+  close()
 }
 
 /**

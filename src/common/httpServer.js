@@ -243,7 +243,7 @@ export const uploadData = (url, filePath , formData = {}, header = {}) => new Pr
         fail: (err) => {
             error(err.errMsg)
             uni.hideLoading()
-            resolve(err)
+            reject(result)
         }
     });
 })

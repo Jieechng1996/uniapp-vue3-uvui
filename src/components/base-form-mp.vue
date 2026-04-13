@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2026-03-21 15:40:50
+ * @LastEditTime: 2026-03-30 16:18:42
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -14,7 +14,7 @@
 			})" :key="index">
 				<uv-form-item :label="item.label" :name="item.key" :prop="item.key" borderBottom
 					:required="item.required" v-if="item.showFunc ? item.showFunc() : true"
-					v-bind="{ ...props.formItemProps, ...item.formItemProps }">
+					v-bind="{ ...props.formItemProps, ...item.formItemProps }" class="min-w-0">
 					<view v-if="item.type === 'date'" class="w-full">
 						<uv-datetime-picker :ref="'datetimePicker' + index" mode="date" :value="dayjs().valueOf()"
 							@confirm="
@@ -57,7 +57,8 @@
 					</view>
 					<view v-else-if="item.type === 'dateRange' || item.type === 'range'">
 						<view
-							@click="() => !(item.disabled || props.disabled) && proxy.$refs['range' + index][0].open()" class="w-full">
+							@click="() => !(item.disabled || props.disabled) && proxy.$refs['range' + index][0].open()"
+							class="w-full">
 							<uv-input v-model="formData[item.key]" :placeholder="item.placeholder || '请选择'" clearable
 								readonly border="surround" suffixIcon="arrow-down" :disabled="item.disabled"
 								v-bind="{ ...item.props }"></uv-input>
@@ -84,17 +85,18 @@
 						</view>
 						<base-dialog :search-key="item.searchKey" :ref="'dialog' + index" :params="item.params || {}"
 							:api="item.api" :keys="item.keys" :columns="item.columns || []"
-							:checkedType="item.checkedType || 'radio'" v-model="formData[item.key]" @confirm="
+							:checkedType="item.checkedType || 'radio'" :modelValue="formData[item.key]" @confirm="
 								value => {
 									if (item.keys?.key) {
 										if (item.checkedType === 'checkbox') {
-											formData[item.value || item.key + 'Text'] = value.map(line => line[item.keys?.value]).toString()
-											formData[item.key] = value.map(line => line[item.keys?.key]).toString()
+											formData[item.value || item.key + 'Text'] = item.keys ? value.map(line => line[item.keys?.value]).toString() : ''
+											formData[item.key] = item.keys ? value.map(line => line[item.keys?.key]).toString() : ''
 										} else {
-											formData[item.value || item.key + 'Text'] = value[item.keys?.value]
-											formData[item.key] = value[item.keys?.key]
+											formData[item.value || item.key + 'Text'] = item.keys ? value[item.keys?.value] : ''
+											formData[item.key] = item.keys ? value[item.keys?.key] : ''
 										}
 									}
+									console.log(value);
 									emit('update:modelValue', toRaw(formData));
 									typeof item.confirmFunc == 'function' && item.confirmFunc(value);
 									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
@@ -122,20 +124,20 @@
 							" v-bind="item.props">
 						</base-uploader>
 					</view>
-					<view v-else-if="item.type == 'documentUploader'">
-						<base-file-uploader :modelValue="formData[item.key + 's']" :limit="1" :disabled="item.disabled"
-							:businessId="item.businessId" :businessKey="item.businessKey" :bucketName="item.bucketName"
-							@callback="
+					<view v-else-if="item.type == 'documentUploader'" class="w-full min-w-0">
+						<base-document-uploader :modelValue="formData[item.key + 's']" :limit="1"
+							:disabled="item.disabled" :businessId="item.businessId" :businessKey="item.businessKey"
+							:bucketName="item.bucketName" @callback="
 								file => {
 									formData[item.key] = file.filesPath;
 									emit('update:modelValue', toRaw(formData));
 									typeof item.callbackFunc == 'function' && item.callbackFunc(file);
 								}
 							" v-bind="item.props">
-						</base-file-uploader>
+						</base-document-uploader>
 					</view>
 					<view v-else-if="item.type == 'documentUploaders'">
-						<base-file-uploader v-model="formData[item.key]" :disabled="item.disabled"
+						<base-document-uploader v-model="formData[item.key]" :disabled="item.disabled"
 							:businessId="item.businessId" :businessKey="item.businessKey" :bucketName="item.bucketName"
 							@callback="
 								file => {
@@ -143,7 +145,7 @@
 									typeof item.callbackFunc == 'function' && item.callbackFunc(file);
 								}
 							" v-bind="item.props">
-						</base-file-uploader>
+						</base-document-uploader>
 					</view>
 
 					<view v-else-if="item.type === 'lookup' || item.type === 'lookupCode'" class="w-full">
@@ -160,6 +162,8 @@
 									formData[item.value || item.key + 'Text'] = value.meaning;
 									emit('update:modelValue', toRaw(formData));
 									typeof item.callbackFunc == 'function' && item.callbackFunc(value);
+									typeof item.callBackFunc == 'function' && item.callBackFunc(value);
+									typeof item.changeFunc == 'function' && item.changeFunc(value);
 								}
 							" @onLoad="
 								list => {
@@ -210,7 +214,8 @@
 							:disabled="item.disabled" @change="() => emit('update:modelValue', toRaw(formData))">
 							<uv-radio v-for="(line, index) in item?.options" :key="index"
 								:customStyle="{ marginRight: '16px', marginBottom: '8px' }" shape="square"
-								:label="line.value" :name="line.key" v-bind="item.radioProps">{{ line.value || line.label
+								:label="line.value" :name="line.key" v-bind="item.radioProps">{{ line.value ||
+									line.label
 								}}</uv-radio>
 						</uv-radio-group>
 					</view>
@@ -255,7 +260,7 @@
 
 <script setup>
 import dayjs from "dayjs";
-import { getCurrentInstance, reactive, ref, watch, toRaw, onMounted } from "vue";
+import { getCurrentInstance, reactive, ref, watch, toRaw, onMounted,computed } from "vue";
 import { warning } from "../common/message";
 
 const props = defineProps({
@@ -303,33 +308,14 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue", "btnSearch", "dataOnChange"]);
 
-const formData = reactive({});
-
-watch(
-	() => props.modelValue,
-	value => {
-		if (value) {
-			for (let i in toRaw(value)) {
-				formData[i] = toRaw(value)[i];
-			}
-
-		}
-	},
-	{ deep: true, immediate: true }
-);
-
-
-
-watch(
-	() => formData,
-	value => {
-		if (value) {
-			// emit("update:modelValue", value);
-			emit("dataOnChange", toRaw(value)); //提供一个onChange方法，避免多个form存在时可能有响应式失效
-		}
-	},
-	{ deep: true, immediate: true }
-);
+// 使用 computed 实现双向绑定
+const formData = computed({
+	get: () => props.modelValue,
+	set: (value) => {
+		emit("update:modelValue", value);
+		emit("dataOnChange", value);
+	}
+});
 
 const curRules = ref({});
 
@@ -355,7 +341,12 @@ props.legend.forEach(item => {
 		item.trueValue = item.trueValue || "Y";
 		item.falseValue = item.falseValue || "N";
 		formData[item.key] = formData[item.key] || item.falseValue;
-		formData[item.key + "Flag"] = formData[item.key] === item.trueValue;
+		watch(
+			() => formData[item.key],
+			(newValue) => {
+				formData[item.key + "Flag"] = formData[item.key] === item.trueValue;
+			}
+		);
 	}
 	if (item.type === "uploader" || item.type === "documentUploader") {
 		formData[item.key] = formData[item.key] || "";
@@ -365,7 +356,10 @@ props.legend.forEach(item => {
 		watch(
 			() => formData[item.key],
 			(newValue) => {
-				formData[item.key + "s"] = newValue ? [{ filesPath: newValue }] : [];
+				formData[item.key + "s"] = newValue ? [{ 
+					filesName: newValue.split('/').pop(),
+					filesPath: newValue 
+				}] : [];
 			}
 		);
 	}
@@ -418,4 +412,12 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.uv-form-item__body__right__content__slot) {
+	min-width: 0px !important;
+}
+
+:deep(.uv-form-item__body__right) {
+	min-width: 0px !important;
+}
+</style>
