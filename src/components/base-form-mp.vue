@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-05-08 15:06:42
  * @Author: guojiecheng
- * @LastEditTime: 2026-03-30 16:18:42
+ * @LastEditTime: 2026-04-20 16:23:25
  * @LastEditors: guojiecheng
 -->
 <template>
@@ -353,13 +353,29 @@ props.legend.forEach(item => {
 		formData[item.key + "s"] = formData[item.key + "s"] || [];
 	}
 	if (item.type === "uploader" || item.type === "documentUploader") {
+		// 初始化
+		if (!formData.value[item.key]) formData.value[item.key] = ""; // 使用 .value 访问 computed 内部可能不直观，建议直接操作对象引用，但需小心
+		
+		// 更好的方式是监听 modelValue 的变化，或者在 callback 中处理
+		// 但由于这里是在配置阶段生成的 watch，我们需要确保它能正确工作
+		
 		watch(
-			() => formData[item.key],
+			() => props.modelValue[item.key], // 监听源数据的变化
 			(newValue) => {
-				formData[item.key + "s"] = newValue ? [{ 
-					filesName: newValue.split('/').pop(),
-					filesPath: newValue 
-				}] : [];
+				// 构造新的表单数据对象
+				const newData = { ...props.modelValue };
+				
+				if (newValue) {
+					newData[item.key + "s"] = [{ 
+						filesName: newValue.split('/').pop(),
+						filesPath: newValue 
+					}];
+				} else {
+					newData[item.key + "s"] = [];
+				}
+				
+				// 触发更新，确保父组件 v-model 同步，且上传组件能收到最新数据
+				emit("update:modelValue", newData);
 			}
 		);
 	}
